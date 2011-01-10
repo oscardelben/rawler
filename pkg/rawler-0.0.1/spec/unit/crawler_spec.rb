@@ -3,11 +3,39 @@ require File.dirname(__FILE__) + '/../spec_helper.rb'
 describe Rawler::Crawler do
   
   it "should parse all links" do
-    url = 'http://example.com'
+    url = 'http://example.com/'
     register(url, site)
     
     Rawler::Crawler.new(url).links.should == ['http://example.com/foo', 'http://external.com/bar']
   end
+  
+  it "should return an empty array when raising Errno::ECONNREFUSED" do
+    url = 'http://example.com'
+    register(url, site)
+    
+    Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
+    
+    crawler = Rawler::Crawler.new(url).links.should == []
+  end
+  
+  it "should parse relative links" do
+    url = 'http://example.com/path'
+    register(url, '<a href="/foo">foo</a>')
+    
+    Rawler::Crawler.new(url).links.should == ['http://example.com/foo']
+  end
+  
+  # it "should print a message when raising Errno::ECONNREFUSED" do
+  #   pending "refactor output. Don't use a global variable"
+  #   url = 'http://example.com'
+  #   register(url, site)
+  #   
+  #   Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
+  #   
+  #   $stdout.should_receive(:puts).with("Couldn't connect to #{url}")
+  #   
+  #   Rawler::Crawler.new(url).links
+  # end
   
   private
   

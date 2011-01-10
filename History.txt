@@ -1,4 +1,10 @@
-=== 1.0.0 / 2011-01-10
+=== 0.0.2 / 2011-01-10
+
+* 1 major enhancement
+
+  * Handle relative urls
+
+=== 0.0.1 / 2011-01-10
 
 * 1 major enhancement
 
