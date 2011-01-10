@@ -16,6 +16,7 @@ gem install rawler
 
 == TODO
 
+* Handle relative urls!
 * Handle https (now returns 400). See http://stackoverflow.com/questions/1719809/ruby-on-rails-https-post-bad-request
 * Export to html
 * Handle multiple urls at once
