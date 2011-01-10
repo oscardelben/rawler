@@ -22,6 +22,7 @@ gem install rawler
 * Export to html
 * Handle multiple urls at once
 * Add user agent
+* Don't bother parsing pdf or movie for links
 
 == LICENSE:
 
