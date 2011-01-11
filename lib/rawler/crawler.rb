@@ -16,7 +16,7 @@ module Rawler
       response = Rawler::Request.get(url)
       
       doc = Nokogiri::HTML(response.body)
-      doc.css('a').map { |a| absolute_url(a['href']) }
+      doc.css('a').map { |a| absolute_url(a['href']) }.select { |url| valid_url?(url) }
     rescue Errno::ECONNREFUSED
       write("Couldn't connect to #{url}")
       []
@@ -38,6 +38,12 @@ module Rawler
     
     def not_html?(url)
       Rawler::Request.head(url).content_type != 'text/html'
+    end
+    
+    def valid_url?(url)
+      scheme = URI.parse(url).scheme
+
+      ['http', 'https'].include?(scheme)
     end
   
   end

@@ -67,6 +67,19 @@ describe Rawler::Crawler do
     
   end
   
+  it "should ignore links other than http or https" do
+    content = <<-content
+      <a href="http://example.com/valid">foo</a>
+      <a href="mailto:info@example.com">invalid</a>
+      <a href="https://foo.com">valid</a>
+    content
+    
+    register(url, content)
+    
+    crawler = Rawler::Crawler.new(url)
+    crawler.links.should == ['http://example.com/valid', 'https://foo.com']
+  end
+  
   private
   
   def site
