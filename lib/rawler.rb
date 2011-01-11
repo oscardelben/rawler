@@ -9,7 +9,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'rawler/core_extensions'
 
 module Rawler
-  VERSION = '0.0.2'
+  VERSION = '0.0.3'
   
   mattr_accessor :output
   mattr_accessor :url
