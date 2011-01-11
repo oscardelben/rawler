@@ -6,6 +6,8 @@
 
 Rawler is a Ruby library that crawls your website and see the status code of each of your links. Useful for finding dead links.
 
+Rawler will only parse pages with content type 'text/html', but it will check for the response code of every link.
+
 == SYNOPSIS:
 
   rawler http://example.com
@@ -22,7 +24,6 @@ gem install rawler
 * Export to html
 * Handle multiple urls at once
 * Add user agent
-* Don't bother parsing pdf or movie for links
 
 == LICENSE:
 

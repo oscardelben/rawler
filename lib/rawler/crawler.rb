@@ -12,7 +12,7 @@ module Rawler
       uri = URI.parse(url)
       main_uri = URI.parse(Rawler.url)
       
-      if uri.host != main_uri.host
+      if different_domain?(uri, main_uri) || not_html?(uri)
         return []
       end
       
@@ -35,6 +35,21 @@ module Rawler
     
     def fetch_page(uri)
       Net::HTTP.get(uri)
+    end
+    
+    def different_domain?(uri_1, uri_2)
+      uri_1.host != uri_2.host
+    end
+    
+    def not_html?(uri)
+      response = nil
+
+      Net::HTTP.start(uri.host, uri.port) do |http|
+        path = (uri.path.size == 0)  ? "/" : uri.path
+        response = http.head(path, {'User-Agent'=>'Rawler'})
+      end
+
+      response.content_type != 'text/html'
     end
   
   end

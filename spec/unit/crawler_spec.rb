@@ -52,6 +52,21 @@ describe Rawler::Crawler do
     crawler.links
   end
   
+  context "should ignore content type other than text/html" do
+    
+    ['text/plain', 'text/css', 'image/jpeg'].each do |content_type|
+      
+      it "should ignore '#{content_type}'" do
+        register(url, site, 200, :content_type => content_type)
+
+        crawler = Rawler::Crawler.new(url)
+        crawler.links.should == []
+      end
+      
+    end
+    
+  end
+  
   private
   
   def site
