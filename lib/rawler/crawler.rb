@@ -25,7 +25,7 @@ module Rawler
     end
     
     def write(message)
-      Rawler::Formatter.output.puts(message)
+      Rawler.output.puts(message)
     end
   
   end

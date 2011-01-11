@@ -7,7 +7,7 @@ module Rawler
     def initialize(url, output)
       @url = url
       @responses = {}
-      Rawler::Formatter.output = output
+      Rawler.output = output
     end
     
     def validate
@@ -57,7 +57,7 @@ module Rawler
     end
     
     def write(message)
-      Rawler::Formatter.output.puts(message)
+      Rawler.output.puts(message)
     end
     
   end

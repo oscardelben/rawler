@@ -32,7 +32,7 @@ describe Rawler::Crawler do
     register(url, site)
     
     Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
-    Rawler::Formatter.should_receive(:output).and_return(output)
+    Rawler.should_receive(:output).and_return(output)
     
     output.should_receive(:puts).with("Couldn't connect to #{url}")
     
