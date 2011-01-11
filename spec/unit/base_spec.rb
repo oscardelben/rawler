@@ -75,7 +75,7 @@ describe Rawler::Base do
     it "should rescue from Errno::ECONNREFUSED" do
       url = 'http://example.com'
       
-      Net::HTTP.should_receive(:start).and_raise Errno::ECONNREFUSED
+      rawler.should_receive(:get_response).and_raise Errno::ECONNREFUSED
       
       output.should_receive(:puts).with("Connection refused - '#{url}'")
       
@@ -87,7 +87,7 @@ describe Rawler::Base do
        it "should rescue from #{error}" do
          url = 'http://example.com'
 
-         Net::HTTP.should_receive(:start).and_raise error
+         rawler.should_receive(:get_response).and_raise error
 
          output.should_receive(:puts).with("Connection problems - '#{url}'")
 

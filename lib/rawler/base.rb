@@ -33,12 +33,7 @@ module Rawler
     def add_status_code(link)
       uri = URI.parse(link)
       
-      response = nil
-
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        path = (uri.path.size == 0)  ? "/" : uri.path
-        response = http.head(path, {'User-Agent'=>'Rawler'})
-      end
+      response = get_response(uri)
       
       write("#{response.code} - #{link}")
       responses[link] = { :status => response.code.to_i }
@@ -59,6 +54,17 @@ module Rawler
     
     def write(message)
       Rawler.output.puts(message)
+    end
+    
+    def get_response(uri)
+      response = nil
+
+      Net::HTTP.start(uri.host, uri.port) do |http|
+        path = (uri.path.size == 0)  ? "/" : uri.path
+        response = http.head(path, {'User-Agent'=>'Rawler'})
+      end
+      
+      response
     end
     
   end

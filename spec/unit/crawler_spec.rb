@@ -32,23 +32,24 @@ describe Rawler::Crawler do
   
   it "should return an empty array when raising Errno::ECONNREFUSED" do
     register(url, site)
+    crawler = Rawler::Crawler.new(url)
     
-    Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
+    crawler.should_receive(:fetch_page).and_raise Errno::ECONNREFUSED
     
-    crawler = Rawler::Crawler.new(url).links.should == []
+    crawler.links.should == []
   end
   
   it "should print a message when raising Errno::ECONNREFUSED" do
     output = double('output')
-
     register(url, site)
     
-    Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
-    Rawler.should_receive(:output).and_return(output)
+    crawler = Rawler::Crawler.new(url)
     
+    crawler.should_receive(:fetch_page).and_raise Errno::ECONNREFUSED
+    Rawler.should_receive(:output).and_return(output)    
     output.should_receive(:puts).with("Couldn't connect to #{url}")
     
-    Rawler::Crawler.new(url).links
+    crawler.links
   end
   
   private

@@ -16,9 +16,7 @@ module Rawler
         return []
       end
       
-      content = Net::HTTP.get(uri)
-      
-      doc = Nokogiri::HTML(content)
+      doc = Nokogiri::HTML(fetch_page(uri))
       doc.css('a').map { |a| absolute_url(a['href']) }
     rescue Errno::ECONNREFUSED
       write("Couldn't connect to #{url}")
@@ -33,6 +31,10 @@ module Rawler
     
     def write(message)
       Rawler.output.puts(message)
+    end
+    
+    def fetch_page(uri)
+      Net::HTTP.get(uri)
     end
   
   end
