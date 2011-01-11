@@ -45,7 +45,7 @@ module Rawler
     end
     
     def same_domain?(link)
-      URI.parse(Rawler.url).host == URI.parse(link).host
+      URI.parse(URI.encode(Rawler.url)).host == URI.parse(URI.encode(link)).host
     end
     
     def not_yet_parsed?(link)

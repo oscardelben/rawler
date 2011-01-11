@@ -25,7 +25,7 @@ module Rawler
     private
     
     def absolute_url(path)
-      URI.parse(url).merge(path.to_s).to_s
+      URI.parse(URI.encode(url)).merge(URI.encode(path.to_s)).to_s
     end
     
     def write(message)
@@ -33,7 +33,7 @@ module Rawler
     end
         
     def different_domain?(url_1, url_2)
-      URI.parse(url_1).host != URI.parse(url_2).host
+      URI.parse(URI.encode(url_1)).host != URI.parse(URI.encode(url_2)).host
     end
     
     def not_html?(url)
@@ -41,7 +41,7 @@ module Rawler
     end
     
     def valid_url?(url)
-      scheme = URI.parse(url).scheme
+      scheme = URI.parse(URI.encode(url)).scheme
 
       ['http', 'https'].include?(scheme)
     end
