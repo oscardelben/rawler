@@ -7,7 +7,7 @@ module Rawler
     def initialize(url, output)
       @url = url
       @responses = {}
-      $output = output
+      Rawler::Formatter.output = output
     end
     
     def validate
@@ -39,13 +39,13 @@ module Rawler
         response = http.head(path, {'User-Agent'=>'Rawler'})
       end
       
-      $output.puts("#{response.code} - #{link}")
+      write("#{response.code} - #{link}")
       responses[link] = { :status => response.code.to_i }
     rescue Errno::ECONNREFUSED
-      puts "Connection refused - '#{link}'"
+      write("Connection refused - '#{link}'")
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
            Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError
-      puts "Connection problems - #{link}"
+      write("Connection problems - '#{link}'")
     end
     
     def same_domain?(link)
@@ -54,6 +54,10 @@ module Rawler
     
     def not_yet_parsed?(link)
       responses[link].nil?
+    end
+    
+    def write(message)
+      Rawler::Formatter.output.puts(message)
     end
     
   end

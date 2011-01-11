@@ -14,7 +14,7 @@ module Rawler
       doc = Nokogiri::HTML(content)
       doc.css('a').map { |a| absolute_url(a['href']) }
     rescue Errno::ECONNREFUSED
-      $output.puts "Couldn't connect to #{url}"
+      write("Couldn't connect to #{url}")
       []
     end
     
@@ -22,6 +22,10 @@ module Rawler
     
     def absolute_url(path)
       URI.parse(url).merge(path.to_s).to_s
+    end
+    
+    def write(message)
+      Rawler::Formatter.output.puts(message)
     end
   
   end

@@ -25,17 +25,19 @@ describe Rawler::Crawler do
     Rawler::Crawler.new(url).links.should == ['http://example.com/foo']
   end
   
-  # it "should print a message when raising Errno::ECONNREFUSED" do
-  #   pending "refactor output. Don't use a global variable"
-  #   url = 'http://example.com'
-  #   register(url, site)
-  #   
-  #   Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
-  #   
-  #   $stdout.should_receive(:puts).with("Couldn't connect to #{url}")
-  #   
-  #   Rawler::Crawler.new(url).links
-  # end
+  it "should print a message when raising Errno::ECONNREFUSED" do
+    output = double('output')
+
+    url = 'http://example.com'
+    register(url, site)
+    
+    Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
+    Rawler::Formatter.should_receive(:output).and_return(output)
+    
+    output.should_receive(:puts).with("Couldn't connect to #{url}")
+    
+    Rawler::Crawler.new(url).links
+  end
   
   private
   

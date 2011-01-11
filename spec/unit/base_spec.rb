@@ -72,6 +72,29 @@ describe Rawler::Base do
       rawler.responses[url][:status].should == 302
     end
     
+    it "should rescue from Errno::ECONNREFUSED" do
+      url = 'http://example.com'
+      
+      Net::HTTP.should_receive(:start).and_raise Errno::ECONNREFUSED
+      
+      output.should_receive(:puts).with("Connection refused - '#{url}'")
+      
+      rawler.send(:add_status_code, url)
+    end
+    
+    [Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+    Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError].each do |error|
+       it "should rescue from #{error}" do
+         url = 'http://example.com'
+
+         Net::HTTP.should_receive(:start).and_raise error
+
+         output.should_receive(:puts).with("Connection problems - '#{url}'")
+
+         rawler.send(:add_status_code, url)
+       end   
+    end
+    
   end
   
   
