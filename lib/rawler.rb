@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'net/http'
+require 'net/https'
 require 'nokogiri'
 
 $:.unshift(File.dirname(__FILE__)) unless
