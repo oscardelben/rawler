@@ -9,14 +9,13 @@ module Rawler
     end
     
     def links
-      uri = URI.parse(url)
-      main_uri = URI.parse(Rawler.url)
-      
-      if different_domain?(uri, main_uri) || not_html?(uri)
+      if different_domain?(url, Rawler.url) || not_html?(url)
         return []
       end
       
-      doc = Nokogiri::HTML(fetch_page(uri))
+      response = Rawler::Request.get(url)
+      
+      doc = Nokogiri::HTML(response.body)
       doc.css('a').map { |a| absolute_url(a['href']) }
     rescue Errno::ECONNREFUSED
       write("Couldn't connect to #{url}")
@@ -32,24 +31,13 @@ module Rawler
     def write(message)
       Rawler.output.puts(message)
     end
-    
-    def fetch_page(uri)
-      Net::HTTP.get(uri)
+        
+    def different_domain?(url_1, url_2)
+      URI.parse(url_1).host != URI.parse(url_2).host
     end
     
-    def different_domain?(uri_1, uri_2)
-      uri_1.host != uri_2.host
-    end
-    
-    def not_html?(uri)
-      response = nil
-
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        path = (uri.path.size == 0)  ? "/" : uri.path
-        response = http.head(path, {'User-Agent'=>'Rawler'})
-      end
-
-      response.content_type != 'text/html'
+    def not_html?(url)
+      Rawler::Request.head(url).content_type != 'text/html'
     end
   
   end

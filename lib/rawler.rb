@@ -15,4 +15,5 @@ module Rawler
   
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"
+  autoload :Request, "rawler/request"
 end

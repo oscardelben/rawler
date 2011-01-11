@@ -34,7 +34,7 @@ describe Rawler::Crawler do
     register(url, site)
     crawler = Rawler::Crawler.new(url)
     
-    crawler.should_receive(:fetch_page).and_raise Errno::ECONNREFUSED
+    Rawler::Request.should_receive(:get).and_raise Errno::ECONNREFUSED
     
     crawler.links.should == []
   end
@@ -45,7 +45,7 @@ describe Rawler::Crawler do
     
     crawler = Rawler::Crawler.new(url)
     
-    crawler.should_receive(:fetch_page).and_raise Errno::ECONNREFUSED
+    Rawler::Request.should_receive(:get).and_raise Errno::ECONNREFUSED
     Rawler.should_receive(:output).and_return(output)    
     output.should_receive(:puts).with("Couldn't connect to #{url}")
     
