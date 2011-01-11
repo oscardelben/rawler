@@ -2,16 +2,17 @@ module Rawler
   
   class Base
     
-    attr_accessor :url, :responses
+    attr_accessor :responses
     
     def initialize(url, output)
-      @url = url
       @responses = {}
+      
+      Rawler.url = url
       Rawler.output = output
     end
     
     def validate
-      validate_links_in_page(url)
+      validate_links_in_page(Rawler.url)
     end
     
     private
@@ -49,7 +50,7 @@ module Rawler
     end
     
     def same_domain?(link)
-      URI.parse(url).host == URI.parse(link).host
+      URI.parse(Rawler.url).host == URI.parse(link).host
     end
     
     def not_yet_parsed?(link)

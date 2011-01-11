@@ -9,7 +9,14 @@ module Rawler
     end
     
     def links
-      content = Net::HTTP.get(URI.parse(url))
+      uri = URI.parse(url)
+      main_uri = URI.parse(Rawler.url)
+      
+      if uri.host != main_uri.host
+        return []
+      end
+      
+      content = Net::HTTP.get(uri)
       
       doc = Nokogiri::HTML(content)
       doc.css('a').map { |a| absolute_url(a['href']) }

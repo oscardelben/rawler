@@ -11,6 +11,7 @@ module Rawler
   VERSION = '0.0.2'
   
   mattr_accessor :output
+  mattr_accessor :url
   
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"

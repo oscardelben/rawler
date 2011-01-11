@@ -2,20 +2,16 @@ require File.dirname(__FILE__) + '/../spec_helper.rb'
 
 describe Rawler::Crawler do
   
+  let(:url) { 'http://example.com' }
+  
+  before(:each) do
+    Rawler.stub!(:url).and_return(url)
+  end
+  
   it "should parse all links" do
-    url = 'http://example.com/'
     register(url, site)
     
     Rawler::Crawler.new(url).links.should == ['http://example.com/foo', 'http://external.com/bar']
-  end
-  
-  it "should return an empty array when raising Errno::ECONNREFUSED" do
-    url = 'http://example.com'
-    register(url, site)
-    
-    Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
-    
-    crawler = Rawler::Crawler.new(url).links.should == []
   end
   
   it "should parse relative links" do
@@ -25,10 +21,26 @@ describe Rawler::Crawler do
     Rawler::Crawler.new(url).links.should == ['http://example.com/foo']
   end
   
+  it "should parse links only if the page is in the same domain as the main url" do
+    url = 'http://external.com/path'
+    register(url, '<a href="/foo">foo</a>')
+    
+    Rawler.should_receive(:url).and_return('http://example.com')
+    
+    Rawler::Crawler.new(url).links.should == []
+  end
+  
+  it "should return an empty array when raising Errno::ECONNREFUSED" do
+    register(url, site)
+    
+    Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
+    
+    crawler = Rawler::Crawler.new(url).links.should == []
+  end
+  
   it "should print a message when raising Errno::ECONNREFUSED" do
     output = double('output')
 
-    url = 'http://example.com'
     register(url, site)
     
     Net::HTTP.should_receive(:get).and_raise Errno::ECONNREFUSED
