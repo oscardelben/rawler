@@ -14,6 +14,8 @@ module Rawler
   mattr_accessor :output
   mattr_accessor :url
   
+  mattr_accessor :username, :password
+  
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"
   autoload :Request, "rawler/request"

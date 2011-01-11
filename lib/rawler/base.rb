@@ -4,11 +4,13 @@ module Rawler
     
     attr_accessor :responses
     
-    def initialize(url, output)
+    def initialize(url, output, username=nil, password=nil)
       @responses = {}
-      
-      Rawler.url = url
-      Rawler.output = output
+
+      Rawler.url      = url
+      Rawler.output   = output
+      Rawler.username = username
+      Rawler.password = password
     end
     
     def validate

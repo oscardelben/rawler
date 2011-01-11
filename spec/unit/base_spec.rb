@@ -72,6 +72,13 @@ describe Rawler::Base do
       rawler.responses[url][:status].should == 302
     end
     
+    it "should save username and password" do
+      rawler = Rawler::Base.new('http://example.com', output, 'my_user', 'secret')
+      
+      Rawler.username.should == 'my_user'
+      Rawler.password.should == 'secret'
+    end
+    
     it "should rescue from Errno::ECONNREFUSED" do
       url = 'http://example.com'
       

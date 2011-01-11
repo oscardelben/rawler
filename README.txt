@@ -4,13 +4,19 @@
 
 == DESCRIPTION:
 
-Rawler is a Ruby library that crawls your website and see the status code of each of your links. Useful for finding dead links.
+Rawler is a Ruby library that crawls your website and checks the status code for each of your links. Useful for finding dead links.
 
 Rawler will only parse pages with content type 'text/html', but it will check for the response code of every link.
 
 == SYNOPSIS:
 
-  rawler http://example.com
+  rawler http://example.com [options]
+
+	where [options] are:
+	  --username, -u <s>:   HTT Basic Username
+	  --password, -p <s>:   HTT Basic Password
+	       --version, -v:   Print version and exit
+	          --help, -h:   Show this message
 
 == INSTALL:
 
@@ -18,10 +24,7 @@ gem install rawler
 
 == TODO
 
-
-* Http basic auth
 * Export to html
-* Handle multiple urls at once
 
 == LICENSE:
 

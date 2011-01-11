@@ -80,6 +80,19 @@ describe Rawler::Crawler do
     crawler.links.should == ['http://example.com/valid', 'https://foo.com']
   end
   
+  it "should crawl http basic pages" do
+    content = '<a href="http://example.com/secret-path">foo</a>'
+    
+    register('http://example.com/secret', '', :status => ["401", "Unauthorized"])
+    register('http://foo:bar@example.com/secret', content)
+    
+    Rawler.stub!(:username).and_return('foo')
+    Rawler.stub!(:password).and_return('bar')
+    
+    crawler = Rawler::Crawler.new('http://example.com/secret')
+    crawler.links.should == ['http://example.com/secret-path']
+  end
+  
   private
   
   def site

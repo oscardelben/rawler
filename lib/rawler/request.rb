@@ -24,7 +24,7 @@ module Rawler
         path = (uri.path.size == 0)  ? "/" : uri.path
         
         request = Net::HTTP::Get.new(path)
-        # request.basic_auth user, password
+        request.basic_auth(Rawler.username, Rawler.password)
         http.request(request)
       end
       

@@ -1,11 +1,33 @@
 #!/usr/bin/env ruby
 
 require File.join(File.dirname(__FILE__), '..', '/lib/rawler.rb')
+require File.join(File.dirname(__FILE__), '..', '/vendor/lib-trollop.rb')
 
-domain = ARGV[0]
+opts = Trollop::options do
+  version "rawler 0.0.3 (c) 2011 Oscar Del Ben"
+  banner <<-EOS
+Rawler is a command line utility for parsing links on a website
 
-if domain.nil?
-  puts "Usage: rawler http://example.com"
+Usage:
+      rawler http://example.com [options]
+
+where [options] are:
+EOS
+  
+  # opt :domain, "domain that you want to test", :type => :string
+  opt :username, "HTT Basic Username", :type => :string
+  opt :password, "HTT Basic Password", :type => :string
 end
 
-Rawler::Base.new(domain, $stdout).validate
+domain = ARGV.shift
+
+if domain.nil?
+  Trollop::die "Domain name is mandatory. Type --help for help"
+else
+  Trollop::options do
+    opt :domain, "Domain address", :type => :string
+  end
+end
+
+Rawler::Base.new(domain, $stdout, opts[:username], opts[:password]).validate
+
