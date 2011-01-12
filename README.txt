@@ -1,6 +1,6 @@
 = rawler
 
-* http://github.com/#{github_username}/#{project_name}
+* http://github.com/oscardelben/rawler
 
 == DESCRIPTION:
 
@@ -24,6 +24,8 @@ gem install rawler
 
 == TODO
 
+* Use threads but don't dos servers
+* Respect robots.txt
 * Export to html
 
 == LICENSE:
