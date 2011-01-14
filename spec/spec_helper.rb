@@ -1,3 +1,11 @@
+module Kernel
+  
+  def sleep(duration)
+    nil
+  end
+  
+end
+
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'rawler'

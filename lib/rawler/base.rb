@@ -22,6 +22,8 @@ module Rawler
     def validate_links_in_page(current_url)
       Rawler::Crawler.new(current_url).links.each do |page_url|
         validate_page(page_url)
+        # Todo: include this in a configuration option
+        sleep(3)
       end
     end
     
