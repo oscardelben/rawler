@@ -41,8 +41,8 @@ module Rawler
       responses[link] = { :status => response.code.to_i }
     rescue Errno::ECONNREFUSED
       write("Connection refused - '#{link}'")
-    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
-           Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError
+    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT,
+      EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError
       write("Connection problems - '#{link}'")
     end
     
