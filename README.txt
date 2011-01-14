@@ -28,6 +28,11 @@ gem install rawler
 * Respect robots.txt
 * Export to html
 
+== CONTRIBUTORS:
+
+* Vesa Vänskä https://github.com/vesan
+* Hugh Sasse
+
 == LICENSE:
 
 (The MIT License)
