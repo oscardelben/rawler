@@ -51,6 +51,28 @@ describe Rawler::Crawler do
     
     crawler.links
   end
+
+  it "should return an empty array when raising Errno::ETIMEDOUT" do
+    register(url, site)
+    crawler = Rawler::Crawler.new(url)
+
+    Rawler::Request.should_receive(:get).and_raise Errno::ETIMEDOUT
+
+    crawler.links.should == []
+  end
+
+  it "should print a message when raising Errno::ETIMEDOUT" do
+    output = double('output')
+    register(url, site)
+
+    crawler = Rawler::Crawler.new(url)
+
+    Rawler::Request.should_receive(:get).and_raise Errno::ETIMEDOUT
+    Rawler.should_receive(:output).and_return(output)
+    output.should_receive(:puts).with("Connection to #{url} timed out")
+
+    crawler.links
+  end
   
   context "should ignore content type other than text/html" do
     

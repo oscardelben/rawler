@@ -89,7 +89,7 @@ describe Rawler::Base do
       rawler.send(:add_status_code, url)
     end
     
-    [Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+    [Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT, EOFError,
     Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError].each do |error|
        it "should rescue from #{error}" do
          url = 'http://example.com'

@@ -20,6 +20,9 @@ module Rawler
     rescue Errno::ECONNREFUSED
       write("Couldn't connect to #{url}")
       []
+    rescue Errno::ETIMEDOUT
+      write("Connection to #{url} timed out")
+      []
     end
     
     private
