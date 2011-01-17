@@ -24,7 +24,7 @@ gem install rawler
 
 == TODO
 
-* Use threads but don't dos servers
+* Follow redirects, but still inform about them
 * Respect robots.txt
 * Export to html
 
