@@ -49,6 +49,15 @@ describe Rawler::Base do
       
       rawler.validate
     end
+    
+    it "should validate links with #hashtags" do
+      register('http://example.com/foo1', '<a href="http://example.com/page-with#hashtag">x</a>')
+      register('http://example.com/page-with', '')
+      
+      output.should_receive(:puts).with('200 - http://example.com/page-with#hashtag')
+      
+      rawler.validate
+    end
             
   end
   

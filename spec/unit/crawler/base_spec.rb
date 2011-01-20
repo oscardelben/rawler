@@ -56,4 +56,20 @@ describe Rawler::Crawler do
     
   end
   
+  context "urls with hash tags" do
+    
+    let(:url)     { 'http://example.com/path' }
+    let(:crawler) { Rawler::Crawler.new(url) }
+    let(:content) { '<a href="/foo#bar">foo</a>' }
+    
+    before(:each) do
+      register(url, content)
+    end
+    
+    it "should parse relative links" do
+      crawler.links.should == ['http://example.com/foo#bar']
+    end
+    
+  end
+  
 end

@@ -15,7 +15,7 @@ module Rawler
       private
       
       def perform_request(method, url)     
-        uri = URI.parse(URI.encode(url))
+        uri = URI.parse(url)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = (uri.scheme == 'https')
 
