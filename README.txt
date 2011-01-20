@@ -8,6 +8,8 @@ Rawler is a Ruby library that crawls your website and checks the status code for
 
 Rawler will only parse pages with content type 'text/html', but it will check for the response code of every link.
 
+Please note: I had to temporarily remove url encoding in order to resolve some issues, so if you find any issue, please let me know. I'm also going to use Mechanizer for parsing pages with the next release.
+
 == SYNOPSIS:
 
   rawler http://example.com [options]
