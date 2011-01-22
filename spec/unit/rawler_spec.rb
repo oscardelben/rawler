@@ -13,12 +13,13 @@ describe Rawler do
 
     end
 
-    context "given a URL with http://" do
+    context "given a URL beginning with http://" do
 
       it "should not modify the url" do
         Rawler.url = 'http://www.example.com'
         Rawler.url.should == 'http://www.example.com'
       end
+
     end
 
   end
