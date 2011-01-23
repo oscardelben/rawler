@@ -6,6 +6,7 @@ describe Rawler::Base do
   let(:rawler)  { Rawler::Base.new('http://example.com', output) }
   
   before(:each) do
+    Rawler.stub!(:output).and_return(output)
     register('http://example.com', site)
   end
   
@@ -42,10 +43,10 @@ describe Rawler::Base do
       register('http://external.com', '')
       register('http://external.com/foo', '', 302)
       
-      output.should_receive(:puts).with('200 - http://example.com/foo1')
-      output.should_receive(:puts).with('200 - http://example.com/foo2')
-      output.should_receive(:puts).with('200 - http://external.com')
-      output.should_receive(:puts).with('302 - http://external.com/foo')
+      output.should_receive(:info).with('200 - http://example.com/foo1')
+      output.should_receive(:info).with('200 - http://example.com/foo2')
+      output.should_receive(:info).with('200 - http://external.com')
+      output.should_receive(:warn).with('302 - http://external.com/foo')
       
       rawler.validate
     end
@@ -54,7 +55,7 @@ describe Rawler::Base do
       register('http://example.com/foo1', '<a href="http://example.com/page-with#hashtag">x</a>')
       register('http://example.com/page-with', '')
       
-      output.should_receive(:puts).with('200 - http://example.com/page-with#hashtag')
+      output.should_receive(:info).with('200 - http://example.com/page-with#hashtag')
       
       rawler.validate
     end
@@ -93,7 +94,7 @@ describe Rawler::Base do
       
       Rawler::Request.should_receive(:get).and_raise Errno::ECONNREFUSED
       
-      output.should_receive(:puts).with("Connection refused - '#{url}'")
+      output.should_receive(:error).with("Connection refused - '#{url}'")
       
       rawler.send(:add_status_code, url)
     end
@@ -105,10 +106,80 @@ describe Rawler::Base do
 
          Rawler::Request.should_receive(:get).and_raise error
 
-         output.should_receive(:puts).with("Connection problems - '#{url}'")
+         output.should_receive(:error).with("Connection problems - '#{url}'")
 
          rawler.send(:add_status_code, url)
        end   
+    end
+    
+  end
+  
+  describe "record_response" do
+    
+    let(:message) { 'foo' }
+    
+    context "response code 100" do
+      %w!100, 150, 199!.each do |code|
+
+        it "logger should receive info" do
+          output.should_receive(:info).with("#{code} - #{message}")
+          rawler.send(:record_response, code, message)
+        end
+        
+      end
+    end
+    
+    context "response code 200" do
+      %w!200, 250, 299!.each do |code|
+
+        it "logger should receive info" do
+          output.should_receive(:info).with("#{code} - #{message}")
+          rawler.send(:record_response, code, message)
+        end
+        
+      end
+    end
+    
+    context "response code 300" do
+      %w!300, 350, 399!.each do |code|
+
+        it "logger should receive warn" do
+          output.should_receive(:warn).with("#{code} - #{message}")
+          rawler.send(:record_response, code, message)
+        end
+        
+      end
+    end
+    
+    context "response code 400" do
+      %w!400, 450, 499!.each do |code|
+
+        it "logger should receive info" do
+          output.should_receive(:error).with("#{code} - #{message}")
+          rawler.send(:record_response, code, message)
+        end
+        
+      end
+    end
+    
+    context "response code 500" do
+      %w!400, 550, 599!.each do |code|
+
+        it "logger should receive info" do
+          output.should_receive(:error).with("#{code} - #{message}")
+          rawler.send(:record_response, code, message)
+        end
+        
+      end
+    end
+    
+    context "response code invalid" do
+      let(:code) { 600 }
+      
+      it "logger should receive eror" do
+        output.should_receive(:error).with("Unknown code #{code} - #{message}")
+        rawler.send(:record_response, code, message)
+      end
     end
     
   end

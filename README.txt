@@ -8,6 +8,8 @@ Rawler is a Ruby library that crawls your website and checks the status code for
 
 Rawler will only parse pages with content type 'text/html', but it will check for the response code of every link.
 
+Rawler writes to $stdout and in the future it will be possible for which status code to notify.
+
 Please note: I had to temporarily remove url encoding in order to resolve some issues, so if you find any issue, please let me know. I'm also going to use Mechanizer for parsing pages with the next release.
 
 == SYNOPSIS:
@@ -24,16 +26,35 @@ Please note: I had to temporarily remove url encoding in order to resolve some i
 
 gem install rawler
 
+== DEVELOPMENT:
+
+You need fakeweb and rspec to run the tests. You can then run:
+
+  rake test
+
+To package and run the gem locally:
+
+  rake package
+  cd pkg
+  gem install rawler-#{version}.gem
+
+If you add files, run:
+  
+  rake check_manifest
+
 == TODO
 
+* Add logger levels
 * Follow redirects, but still inform about them
 * Respect robots.txt
 * Export to html
 
 == CONTRIBUTORS:
 
-* Vesa Vänskä https://github.com/vesan
+* Vesa Vänskä
 * Hugh Sasse
+
+See also https://github.com/oscardelben/rawler/contributors
 
 == LICENSE:
 
