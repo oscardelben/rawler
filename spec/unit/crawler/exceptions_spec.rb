@@ -6,7 +6,7 @@ describe Rawler::Crawler do
     
     let(:url)     { 'http://example.com' }
     let(:crawler) { Rawler::Crawler.new(url) }
-    let(:output)  { double('output', :puts => nil) }
+    let(:output)  { double('output', :error => nil) }
     
     before(:each) do
       register(url, '')
@@ -24,7 +24,7 @@ describe Rawler::Crawler do
       end
 
       it "should print a message when raising Errno::ECONNREFUSED" do
-        output.should_receive(:puts).with("Couldn't connect to #{url}")
+        output.should_receive(:error).with("Couldn't connect to #{url}")
 
         crawler.links
       end      
@@ -42,7 +42,7 @@ describe Rawler::Crawler do
       end
 
       it "should print a message when raising Errno::ETIMEDOUT" do
-        output.should_receive(:puts).with("Connection to #{url} timed out")
+        output.should_receive(:error).with("Connection to #{url} timed out")
 
         crawler.links
       end

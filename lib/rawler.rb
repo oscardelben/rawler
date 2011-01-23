@@ -2,6 +2,7 @@ require 'rubygems'
 require 'net/http'
 require 'net/https'
 require 'nokogiri'
+require 'logger'
 
 require 'rawler/core_extensions'
 

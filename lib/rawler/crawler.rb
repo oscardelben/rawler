@@ -32,7 +32,7 @@ module Rawler
     end
     
     def write(message)
-      Rawler.output.puts(message)
+      Rawler.output.error(message)
     end
         
     def different_domain?(url_1, url_2)
