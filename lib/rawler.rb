@@ -16,4 +16,14 @@ module Rawler
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"
   autoload :Request, "rawler/request"
+
+  def self.url=(url)
+    url.strip!
+
+    if (url =~ /http:\/\//) != 0
+      url = 'http://' + url
+    end
+
+    @@url = url
+  end
 end
