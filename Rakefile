@@ -3,6 +3,12 @@
 require 'rubygems'
 require 'hoe'
 
+# require 'bundler'
+# Bundler::GemHelper.install_tasks
+
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:test)
+
 # Hoe.plugin :compiler
 # Hoe.plugin :gem_prelude_sucks
 # Hoe.plugin :inline

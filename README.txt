@@ -24,6 +24,12 @@ Please note: I had to temporarily remove url encoding in order to resolve some i
 
 gem install rawler
 
+== DEVELOPMENT:
+
+You need fakeweb and rspec to run the tests. You can then run:
+
+  rake test
+
 == TODO
 
 * Follow redirects, but still inform about them
