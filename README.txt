@@ -51,8 +51,9 @@ If you add files, run:
 
 == CONTRIBUTORS:
 
-* Vesa Vänskä
+* bcoob
 * Hugh Sasse
+* Vesa Vänskä
 
 See also https://github.com/oscardelben/rawler/contributors
 
