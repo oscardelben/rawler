@@ -16,7 +16,7 @@ module Rawler
       response = Rawler::Request.get(url)
       
       doc = Nokogiri::HTML(response.body)
-      doc.css('a').map { |a| a['href'] }.select { |url| valid_url?(url) }.map { |url| absolute_url(url) }
+      doc.css('a').map { |a| a['href'] }.map { |url| absolute_url(url) }.select { |url| valid_url?(url) }
     rescue Errno::ECONNREFUSED
       write("Couldn't connect to #{url}")
       []
@@ -28,7 +28,11 @@ module Rawler
     private
     
     def absolute_url(path)
-      URI.parse(url).merge(path.to_s).to_s
+      if path[0].chr == '/'
+        URI.parse(url).merge(path.to_s).to_s
+      else
+        path
+      end
     end
     
     def write(message)
@@ -44,15 +48,18 @@ module Rawler
     end
     
     def valid_url?(url)
+      return false unless url
+      
       scheme = URI.parse(url).scheme
-      ['http', 'https'].include?(scheme)
-	  
-    rescue URI::InvalidURIError
-      write("Invalid url - '#{url}'")
-      false
-
+      
+      if ['http', 'https'].include?(scheme)
+        true
+      else
+        write("Invalid url - #{url}")
+        false
+      end
     end
-  
+      
   end
   
 end

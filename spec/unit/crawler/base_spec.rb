@@ -72,4 +72,23 @@ describe Rawler::Crawler do
     
   end
   
+  context "invalid urls" do
+    let(:url)     { 'http://example.com/path' }
+    let(:crawler) { Rawler::Crawler.new(url) }
+    let(:content) { '<a href="invalid">foo</a>' }
+    
+    before(:each) do
+      register(url, content)
+    end
+    
+    it "should parse relative links" do
+      crawler.links.should == []
+    end
+    
+    it "should report the error" do
+      crawler.should_receive(:write).with("Invalid url - invalid")
+      crawler.links
+    end
+  end
+  
 end
