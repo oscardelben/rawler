@@ -5,7 +5,7 @@ module Rawler
     attr_accessor :url, :links
 
     def initialize(url)
-      @url = url
+      @url = url.strip
     end
     
     def links
@@ -28,6 +28,7 @@ module Rawler
     private
     
     def absolute_url(path)
+      path.strip!
       if path[0].chr == '/'
         URI.parse(url).merge(path.to_s).to_s
       else
@@ -50,6 +51,7 @@ module Rawler
     def valid_url?(url)
       return false unless url
       
+      url.strip!
       scheme = URI.parse(url).scheme
       
       if ['http', 'https'].include?(scheme)

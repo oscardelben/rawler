@@ -9,6 +9,7 @@ describe Rawler::Crawler do
         <a href="http://example.com/valid">foo</a>
         <a href="mailto:info@example.com">invalid</a>
         <a href="https://foo.com">valid</a>
+        <a href=" http://fooo.com ">valid with illegal whitespaces</a>
       content
     }
     let(:url)     { 'http://example.com' }
@@ -19,7 +20,7 @@ describe Rawler::Crawler do
     end
   
     it "should ignore links other than http or https" do
-      crawler.links.should == ['http://example.com/valid', 'https://foo.com']
+      crawler.links.should == ['http://example.com/valid', 'https://foo.com', 'http://fooo.com']
     end
   end
 

@@ -21,6 +21,15 @@ describe Rawler do
       end
 
     end
+    
+    context "given a URL beginning and ending with illegal whitespace" do
+
+      it "should strip and parse it correctly" do
+        Rawler.url = ' http://www.example.com '
+        Rawler.url.should == 'http://www.example.com'
+      end
+
+    end
 
   end
   
