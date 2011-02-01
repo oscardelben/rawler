@@ -4,7 +4,7 @@ describe Rawler do
 
   describe "url=" do
 
-    context "given a URL without http://" do
+    context "given an URL without http://" do
 
       it "should prepend http://" do
         Rawler.url = 'www.example.com'
@@ -13,7 +13,7 @@ describe Rawler do
 
     end
 
-    context "given a URL beginning with http://" do
+    context "given an URL beginning with http://" do
 
       it "should not modify the url" do
         Rawler.url = 'http://www.example.com'
@@ -22,7 +22,7 @@ describe Rawler do
 
     end
     
-    context "given a URL beginning and ending with illegal whitespace" do
+    context "given an URL beginning and ending with illegal whitespace" do
 
       it "should strip and parse it correctly" do
         Rawler.url = ' http://www.example.com '
