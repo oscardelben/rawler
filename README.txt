@@ -54,6 +54,7 @@ If you add files, run:
 * bcoob
 * Hugh Sasse
 * Ken Egozi
+* Robert Glaser
 * Vesa Vänskä
 
 See also https://github.com/oscardelben/rawler/contributors

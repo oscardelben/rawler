@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "nokogiri", "1.4.4"
+gem "mechanize", "1.0.0"
 
 group :development, :test do
   gem "rspec", "2.4.0"
