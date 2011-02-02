@@ -68,11 +68,11 @@ module Rawler
         # TODO: check that if a 100 is received
         # then there is another status code as well
         Rawler.output.info(message)
-      when 2:
+      when 2 then
         Rawler.output.info(message)
-      when 3:
+      when 3 then
         Rawler.output.warn(message)
-      when 4,5
+      when 4,5 then
         Rawler.output.error(message)
       else
         Rawler.output.error("Unknown code #{message}")
