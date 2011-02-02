@@ -84,7 +84,8 @@ describe Rawler::Crawler do
   context "invalid urls" do
     let(:url)     { 'http://example.com/path' }
     let(:crawler) { Rawler::Crawler.new(url) }
-    let(:content) { '<a href="invalid">foo</a>' }
+    let(:js_url)  { "javascript:fn('nbjmup;jhfs.esf{fio/dpn');" }
+    let(:content) { "<a href=\"#{js_url}\">foo</a>" }
     
     before(:each) do
       register(url, content)
@@ -95,7 +96,7 @@ describe Rawler::Crawler do
     end
     
     it "should report the error" do
-      crawler.should_receive(:write).with("Invalid url - invalid")
+      crawler.should_receive(:write).with("Invalid url - #{js_url}")
       crawler.links
     end
   end

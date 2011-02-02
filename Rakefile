@@ -27,4 +27,9 @@ Hoe.spec 'rawler' do
   extra_deps << ['nokogiri']
 end
 
+desc 'Console'
+task :console do
+  exec 'irb -rubygems -I lib -r rawler.rb'
+end
+
 # vim: syntax=ruby

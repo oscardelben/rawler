@@ -60,6 +60,10 @@ module Rawler
         write("Invalid url - #{url}")
         false
       end
+
+    rescue URI::InvalidURIError
+      false
+       write("Invalid url - #{url}")
     end
       
   end
