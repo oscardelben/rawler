@@ -200,4 +200,4 @@ describe Rawler::Base do
     site
   end
   
-end 
+end
