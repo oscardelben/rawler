@@ -7,7 +7,7 @@ require 'logger'
 require 'rawler/core_extensions'
 
 module Rawler
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
   
   mattr_accessor :output
   mattr_accessor :url

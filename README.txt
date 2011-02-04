@@ -8,8 +8,6 @@ Rawler is a Ruby library that crawls your website and checks the status code for
 
 Rawler will only parse pages with content type 'text/html', but it will check for the response code of every link.
 
-Rawler writes to $stdout and in the future it will be possible to specify for which status code to notified.
-
 == SYNOPSIS:
 
   rawler http://example.com [options]
