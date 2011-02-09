@@ -85,7 +85,7 @@ describe Rawler::Crawler do
     let(:url)     { 'http://example.com/path' }
     let(:crawler) { Rawler::Crawler.new(url) }
     let(:js_url)  { "javascript:fn('nbjmup;jhfs.esf{fio/dpn');" }
-    let(:content) { "<a href=\"#{js_url}\">foo</a>" }
+    let(:content) { "<a href=\"#{js_url}\">foo</a><a name=\"foo\">" }
     
     before(:each) do
       register(url, content)
