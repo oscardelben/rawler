@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require File.dirname(__FILE__) + '/../../spec_helper.rb'
 
 describe Rawler::Crawler do
@@ -36,14 +38,14 @@ describe Rawler::Crawler do
     
     let(:url)     { 'http://example.com/path' }
     let(:crawler) { Rawler::Crawler.new(url) }
-    let(:content) { '<a href="/foo">foo</a>' }
+    let(:content) { '<a href="/foo">foo</a> <a href="bar">bar</a>' }
     
     before(:each) do
       register(url, content)
     end
     
     it "should parse relative links" do
-      crawler.links.should == ['http://example.com/foo']
+      crawler.links.should == ['http://example.com/foo', 'http://example.com/bar']
     end
     
   end
@@ -75,8 +77,24 @@ describe Rawler::Crawler do
       register(url, content)
     end
     
-    it "should parse relative links" do
-      crawler.links.should == ['http://example.com/foo#bar']
+    it "should parse urls with hashtags" do
+      crawler.links.should == ['http://example.com/foo%23bar']
+    end
+    
+  end
+  
+  context "urls with unicode characters" do
+    
+    let(:url)     { 'http://example.com' }
+    let(:crawler) { Rawler::Crawler.new(url) }
+    let(:content) { '<a href="http://example.com/写程序容易出现的几个不好的地方">foo</a>' }
+    
+    before(:each) do
+      register(url, content)
+    end
+
+    it "should parse unicode links" do
+      crawler.links.should == ['http://example.com/%E5%86%99%E7%A8%8B%E5%BA%8F%E5%AE%B9%E6%98%93%E5%87%BA%E7%8E%B0%E7%9A%84%E5%87%A0%E4%B8%AA%E4%B8%8D%E5%A5%BD%E7%9A%84%E5%9C%B0%E6%96%B9']
     end
     
   end
@@ -94,9 +112,9 @@ describe Rawler::Crawler do
     it "should parse relative links" do
       crawler.links.should == []
     end
-    
+
     it "should report the error" do
-      crawler.should_receive(:write).with("Invalid url - #{js_url}")
+      crawler.should_receive(:write).with("Invalid url - javascript:fn('nbjmup;jhfs.esf%7Bfio/dpn');")
       crawler.links
     end
   end

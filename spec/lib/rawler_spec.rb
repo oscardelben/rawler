@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require File.dirname(__FILE__) + '/../spec_helper.rb'
 
 describe Rawler::Base do
@@ -8,6 +10,16 @@ describe Rawler::Base do
   before(:each) do
     Rawler.stub!(:output).and_return(output)
     register('http://example.com', site)
+  end
+
+  describe "url encoding" do
+    it "should encode url" do
+      original = 'http://example.com/写程序容易出现的几个不好的地方'
+      expected = 'http://example.com/%E5%86%99%E7%A8%8B%E5%BA%8F%E5%AE%B9%E6%98%93%E5%87%BA%E7%8E%B0%E7%9A%84%E5%87%A0%E4%B8%AA%E4%B8%8D%E5%A5%BD%E7%9A%84%E5%9C%B0%E6%96%B9'
+
+      Rawler::Base.new(original, output)
+      Rawler.url.should == expected
+    end
   end
   
   describe "validate_links" do
@@ -50,16 +62,7 @@ describe Rawler::Base do
       
       rawler.validate
     end
-    
-    it "should validate links with #hashtags" do
-      register('http://example.com/foo1', '<a href="http://example.com/page-with#hashtag">x</a>')
-      register('http://example.com/page-with', '')
-      
-      output.should_receive(:info).with('200 - http://example.com/page-with#hashtag')
-      
-      rawler.validate
-    end
-            
+                
   end
   
   describe "get_status_code" do

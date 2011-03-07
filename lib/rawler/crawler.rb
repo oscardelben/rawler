@@ -28,9 +28,11 @@ module Rawler
     private
     
     def absolute_url(path)
-      path.strip!
+      path = URI.encode(path.strip)
       if path[0].chr == '/'
         URI.parse(url).merge(path.to_s).to_s
+      elsif URI.parse(path).scheme.nil?
+        URI.parse(url).merge("/#{path.to_s}").to_s
       else
         path
       end

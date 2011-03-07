@@ -7,7 +7,7 @@ module Rawler
     def initialize(url, output, username=nil, password=nil)
       @responses = {}
 
-      Rawler.url      = url
+      Rawler.url      = URI.escape(url)
       Rawler.output   = Logger.new(output)
       Rawler.username = username
       Rawler.password = password

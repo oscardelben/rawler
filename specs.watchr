@@ -25,7 +25,6 @@ def run(files_to_run)
 end
 
 def run_all_tests
-  puts "foo"
   run(all_test_files.join(' '))
 end
 
