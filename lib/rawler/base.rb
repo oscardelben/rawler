@@ -42,7 +42,7 @@ module Rawler
     rescue Errno::ECONNREFUSED
       Rawler.output.error("Connection refused - '#{link}'")
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT,
-      EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError
+      EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError, SocketError
       Rawler.output.error("Connection problems - '#{link}'")
     end
     
