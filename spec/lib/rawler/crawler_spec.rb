@@ -100,26 +100,48 @@ describe Rawler::Crawler do
   end
   
   context "invalid urls" do
-    let(:url)     { 'http://example.com/path' }
-    let(:crawler) { Rawler::Crawler.new(url) }
-    let(:js_url)  { "javascript:fn('nbjmup;jhfs.esf{fio/dpn');" }
-    let(:content) { "<a href=\"#{js_url}\">foo</a><a name=\"foo\">" }
+
+    context "javascript" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:js_url)  { "javascript:fn('nbjmup;jhfs.esf{fio/dpn');" }
+      let(:content) { "<a href=\"#{js_url}\">foo</a><a name=\"foo\">" }
     
-    before(:each) do
-      register(url, content)
-    end
+      before(:each) do
+        register(url, content)
+      end
     
-    it "should parse relative links" do
-      crawler.links.should == []
+      it "should return empty links" do
+        crawler.links.should == []
+      end
+
+      it "should not report the error" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
     end
 
-    it "should report the error" do
-      crawler.should_receive(:write).with("Invalid url - javascript:fn('nbjmup;jhfs.esf%7Bfio/dpn');")
-      crawler.links
+    context "mailto" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"mailto:example@example.com\">foo</a><a name=\"foo\">" }
+    
+      before(:each) do
+        register(url, content)
+      end
+    
+      it "should return empty links" do
+        crawler.links.should == []
+      end
+
+      it "should not report the error" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
     end
+
   end
-  
-  
+
   context "content type" do
       
     ['text/plain', 'text/css', 'image/jpeg'].each do |content_type|

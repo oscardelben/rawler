@@ -62,7 +62,7 @@ describe Rawler::Base do
       
       rawler.validate
     end
-                
+
   end
   
   describe "get_status_code" do

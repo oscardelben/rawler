@@ -4,6 +4,8 @@ module Rawler
     
     attr_accessor :url, :links
 
+    SKIP_FORMATS = /^(javascript|mailto)/
+
     def initialize(url)
       @url = url.strip
     end
@@ -59,7 +61,7 @@ module Rawler
       if ['http', 'https'].include?(scheme)
         true
       else
-        write("Invalid url - #{url}")
+        write("Invalid url - #{url}") unless url =~ SKIP_FORMATS
         false
       end
 
