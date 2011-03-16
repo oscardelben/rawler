@@ -21,29 +21,29 @@ module Rawler
     
     def validate_links_in_page(current_url)
       Rawler::Crawler.new(current_url).links.each do |page_url|
-        validate_page(page_url)
+        validate_page(page_url, current_url)
         # Todo: include this in a configuration option
         sleep(3)
       end
     end
     
-    def validate_page(page_url)
+    def validate_page(page_url, from_url)
       if not_yet_parsed?(page_url)
-        add_status_code(page_url) 
+        add_status_code(page_url, from_url) 
         validate_links_in_page(page_url) if same_domain?(page_url)
       end
     end
     
-    def add_status_code(link)
+    def add_status_code(link, from_url)
       response = Rawler::Request.get(link)
       
-      record_response(response.code, link)
+      record_response(response.code, link, from_url)
       responses[link] = { :status => response.code.to_i }
     rescue Errno::ECONNREFUSED
-      Rawler.output.error("Connection refused - '#{link}'")
+      Rawler.output.error("Connection refused - #{link} - Called from: #{from_url}")
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT,
       EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError, SocketError
-      Rawler.output.error("Connection problems - '#{link}'")
+      Rawler.output.error("Connection problems - #{link} - Called from: #{from_url}")
     end
     
     def same_domain?(link)
@@ -60,8 +60,13 @@ module Rawler
       Rawler.output.error(message)
     end
     
-    def record_response(code, link)
+    def record_response(code, link, from_url)
       message = "#{code} - #{link}"
+
+      if code.to_i >= 300
+        message += " - Called from: #{from_url}"
+      end
+
       code = code.to_i
       case code / 100
       when 1
