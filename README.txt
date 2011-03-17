@@ -13,8 +13,8 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
   rawler http://example.com [options]
 
 	where [options] are:
-	  --username, -u <s>:   HTT Basic Username
-	  --password, -p <s>:   HTT Basic Password
+	  --username, -u <s>:   HTTP Basic Username
+	  --password, -p <s>:   HTTP Basic Password
 	       --version, -v:   Print version and exit
 	          --help, -h:   Show this message
 
