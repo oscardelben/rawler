@@ -40,13 +40,6 @@ If you add files, run:
 
 And add them to the Manifest file.
 
-== TODO
-
-* Add logger levels
-* Follow redirects, but still inform about them
-* Respect robots.txt
-* Export to html
-
 == CONTRIBUTORS:
 
 * bcoob
