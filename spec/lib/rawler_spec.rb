@@ -53,13 +53,24 @@ describe Rawler::Base do
       register('http://example.com/foo1', '<a href="http://external.com/foo">x</a>')
       register('http://example.com/foo2', '')
       register('http://external.com', '')
-      register('http://external.com/foo', '', 302)
+      register('http://external.com/foo', '', 301)
       
       output.should_receive(:info).with('200 - http://example.com/foo1')
       output.should_receive(:info).with('200 - http://example.com/foo2')
       output.should_receive(:info).with('200 - http://external.com')
-      output.should_receive(:warn).with('302 - http://external.com/foo - Called from: http://example.com/foo1')
+      output.should_receive(:warn).with('301 - http://external.com/foo - Called from: http://example.com/foo1')
       
+      rawler.validate
+    end
+
+    it "should follow redirections but inform about them" do
+      register('http://example.com', '<a href="/foo">foo</a>')
+      register('http://example.com/foo', '', 301, :location => 'http://example.com/bar')
+      register('http://example.com/bar', '')
+
+      output.should_receive(:warn).with('301 - http://example.com/foo - Called from: http://example.com - Following redirection to: http://example.com/bar')
+      output.should_receive(:info).with('200 - http://example.com/bar')
+
       rawler.validate
     end
 
@@ -77,14 +88,14 @@ describe Rawler::Base do
       rawler.responses[url][:status].should == 200
     end
     
-    it "should add to 302 links" do
+    it "should add to 301 links" do
       url = 'http://example.com/foo'
       from = 'http://other.com'
-      register(url, '', 302)
+      register(url, '', 301)
       
       rawler.send(:add_status_code, url, from)
       
-      rawler.responses[url][:status].should == 302
+      rawler.responses[url][:status].should == 301
     end
     
     it "should save username and password" do

@@ -36,14 +36,16 @@ module Rawler
     
     def add_status_code(link, from_url)
       response = Rawler::Request.get(link)
+
+      validate_page(response['Location'], from_url) if response['Location']
       
-      record_response(response.code, link, from_url)
+      record_response(response.code, link, from_url, response['Location'])
       responses[link] = { :status => response.code.to_i }
     rescue Errno::ECONNREFUSED
-      Rawler.output.error("Connection refused - #{link} - Called from: #{from_url}")
+      error("Connection refused - #{link} - Called from: #{from_url}")
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT,
       EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError, SocketError
-      Rawler.output.error("Connection problems - #{link} - Called from: #{from_url}")
+      error("Connection problems - #{link} - Called from: #{from_url}")
     end
     
     def same_domain?(link)
@@ -54,18 +56,18 @@ module Rawler
       responses[link].nil?
     end
     
-    def write(message)
-      # TODO: This may not always be an error message, 
-      # but that will make it show up most of the time
+    def error(message)
       Rawler.output.error(message)
     end
     
-    def record_response(code, link, from_url)
+    def record_response(code, link, from_url, redirection=nil)
       message = "#{code} - #{link}"
 
       if code.to_i >= 300
         message += " - Called from: #{from_url}"
       end
+          
+      message += " - Following redirection to: #{redirection}" if redirection
 
       code = code.to_i
       case code / 100
