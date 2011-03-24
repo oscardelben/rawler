@@ -19,10 +19,10 @@ module Rawler
       
       doc = Nokogiri::HTML(response.body)
       doc.css('a').map { |a| a['href'] }.select { |url| !url.nil? }.map { |url| absolute_url(url) }.select { |url| valid_url?(url) }
-    rescue Errno::ECONNREFUSED
+    rescue Errno::ECONNREFUSED # TODO: add called from
       write("Couldn't connect to #{url}")
       []
-    rescue Errno::ETIMEDOUT
+    rescue Errno::ETIMEDOUT # TODO: add called from
       write("Connection to #{url} timed out")
       []
     end
@@ -38,8 +38,12 @@ module Rawler
       else
         path
       end
+    rescue URI::InvalidURIError
+      write("Invalid url: #{path} - Called from: #{url}")
+      nil
     end
     
+    # TODO: add 'called from in a more pragmatic way as an optional parameter
     def write(message)
       Rawler.output.error(message)
     end

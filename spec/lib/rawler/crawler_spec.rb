@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/../../spec_helper.rb'
 describe Rawler::Crawler do
 
   let(:url)    { 'http://example.com' }
-  let(:output) { double("output", :error => nil) }
+  let(:output)  { double('output', :error => nil) }
 
   before(:each) do
     Rawler.stub!(:url).and_return(url)
@@ -164,11 +164,9 @@ describe Rawler::Crawler do
     
     let(:url)     { 'http://example.com' }
     let(:crawler) { Rawler::Crawler.new(url) }
-    let(:output)  { double('output', :error => nil) }
     
     before(:each) do
       register(url, '')
-      Rawler.stub!(:output).and_return(output)
     end
     
     context "Errno::ECONNREFUSED" do
@@ -248,6 +246,21 @@ describe Rawler::Crawler do
   
     it "should ignore links other than http or https" do
       crawler.links.should == ['http://example.com/valid', 'https://foo.com', 'http://fooo.com']
+    end
+  end
+
+  context "invalid urls" do
+    let(:content) { '<a href="http://foo;bar">foo</a>' }
+    let(:url)     { 'http://example.com' }
+    let(:crawler) { Rawler::Crawler.new(url) }
+    
+    before(:each) do
+      register(url, content)
+    end
+  
+    it "should notify about the invalid url" do
+      output.should_receive(:error).with('Invalid url: http://foo;bar - Called from: http://example.com')
+      crawler.links.should == []
     end
   end
   
