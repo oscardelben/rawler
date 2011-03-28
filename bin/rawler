@@ -19,8 +19,7 @@ EOS
   opt :password, "HTT Basic Password", :type => :string
 end
 
-# Use dup to unfrozen string
-domain = ARGV.shift.dup
+domain = ARGV.shift
 
 if domain.nil?
   Trollop::die "Domain name is mandatory. Type --help for help"
