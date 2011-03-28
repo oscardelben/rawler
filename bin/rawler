@@ -17,6 +17,7 @@ EOS
   # opt :domain, "domain that you want to test", :type => :string
   opt :username, "HTT Basic Username", :type => :string
   opt :password, "HTT Basic Password", :type => :string
+  opt :wait, "Number of seconds to wait betweet requests", :default => 3
 end
 
 domain = ARGV.shift
@@ -29,5 +30,5 @@ else
   end
 end
 
-Rawler::Base.new(domain, $stdout, opts[:username], opts[:password]).validate
+Rawler::Base.new(domain, $stdout, opts).validate
 

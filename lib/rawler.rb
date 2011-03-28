@@ -11,6 +11,7 @@ module Rawler
   
   mattr_accessor :output
   mattr_accessor :url
+  mattr_accessor :wait
   
   mattr_accessor :username, :password
   

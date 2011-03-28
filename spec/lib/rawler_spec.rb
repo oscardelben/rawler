@@ -99,10 +99,16 @@ describe Rawler::Base do
     end
     
     it "should save username and password" do
-      rawler = Rawler::Base.new('http://example.com', output, 'my_user', 'secret')
+      rawler = Rawler::Base.new('http://example.com', output, {:username => 'my_user', :password => 'secret'})
       
       Rawler.username.should == 'my_user'
       Rawler.password.should == 'secret'
+    end
+    
+    it "should save wait" do
+      rawler = Rawler::Base.new('http://example.com', output, {:wait => 5})
+      
+      Rawler.wait.should == 5
     end
     
     it "should rescue from Errno::ECONNREFUSED" do

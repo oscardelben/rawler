@@ -4,13 +4,14 @@ module Rawler
     
     attr_accessor :responses
     
-    def initialize(url, output, username=nil, password=nil)
+    def initialize(url, output, options={})
       @responses = {}
 
       Rawler.url      = URI.escape(url)
       Rawler.output   = Logger.new(output)
-      Rawler.username = username
-      Rawler.password = password
+      Rawler.username = options[:username]
+      Rawler.password = options[:password]
+      Rawler.wait     = options[:wait].to_i
     end
     
     def validate
@@ -22,8 +23,7 @@ module Rawler
     def validate_links_in_page(current_url)
       Rawler::Crawler.new(current_url).links.each do |page_url|
         validate_page(page_url, current_url)
-        # Todo: include this in a configuration option
-        sleep(3)
+        sleep(Rawler.wait)
       end
     end
     
