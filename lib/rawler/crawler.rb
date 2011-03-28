@@ -30,13 +30,11 @@ module Rawler
     private
     
     def absolute_url(path)
-      path = URI.encode(path.strip)
-      if path[0].chr == '/'
-        URI.parse(url).merge(path.to_s).to_s
-      elsif URI.parse(path).scheme.nil?
-        URI.parse(url).merge("/#{path.to_s}").to_s
-      else
+      path = URI.encode(path.strip, Regexp.new("[^#{URI::PATTERN::UNRESERVED}#{URI::PATTERN::RESERVED}#]", false, 'N'))
+      if URI.parse(path).scheme
         path
+      else
+        URI.parse(url).merge(path).to_s
       end
     rescue URI::InvalidURIError
       write("Invalid url: #{path} - Called from: #{url}")

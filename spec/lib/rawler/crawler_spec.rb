@@ -36,16 +36,36 @@ describe Rawler::Crawler do
   
   context "relative paths" do
     
-    let(:url)     { 'http://example.com/path' }
-    let(:crawler) { Rawler::Crawler.new(url) }
-    let(:content) { '<a href="/foo">foo</a> <a href="bar">bar</a>' }
-    
-    before(:each) do
-      register(url, content)
+    context "base URL ends with a slash" do
+      
+      let(:url)     { 'http://example.com/dir1/dir2/' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { '<a href="/foo">foo</a> <a href="bar">bar</a> <a href="../baz">baz</a>' }
+      
+      before(:each) do
+        register(url, content)
+      end
+      
+      it "should parse relative links" do
+        crawler.links.should == ['http://example.com/foo', 'http://example.com/dir1/dir2/bar', 'http://example.com/dir1/baz']
+      end
+      
     end
     
-    it "should parse relative links" do
-      crawler.links.should == ['http://example.com/foo', 'http://example.com/bar']
+    context "base URL doesn't end with a slash" do
+      
+      let(:url)     { 'http://example.com/dir1/dir2' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { '<a href="/foo">foo</a> <a href="bar">bar</a> <a href="../baz">baz</a>' }
+      
+      before(:each) do
+        register(url, content)
+      end
+      
+      it "should parse relative links" do
+        crawler.links.should == ['http://example.com/foo', 'http://example.com/dir1/bar', 'http://example.com/baz']
+      end
+      
     end
     
   end
@@ -77,8 +97,8 @@ describe Rawler::Crawler do
       register(url, content)
     end
     
-    it "should parse urls with hashtags" do
-      crawler.links.should == ['http://example.com/foo%23bar']
+    it "should not encode hashtags" do
+      crawler.links.should == ['http://example.com/foo#bar']
     end
     
   end
