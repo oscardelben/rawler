@@ -30,7 +30,7 @@ module Rawler
     private
     
     def absolute_url(path)
-      path = URI.encode(path.strip, Regexp.new("[^#{URI::PATTERN::UNRESERVED}#{URI::PATTERN::RESERVED}#]", false, 'N'))
+      path = URI.encode(path.strip, Regexp.new("[^#{URI::PATTERN::UNRESERVED}#{URI::PATTERN::RESERVED}#]"))
       if URI.parse(path).scheme
         path
       else
