@@ -15,6 +15,7 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
 	where [options] are:
 	  --username, -u <s>:   HTTP Basic Username
 	  --password, -p <s>:   HTTP Basic Password
+                --wait:   Number of seconds to wait betweet requests (default 3)
 	       --version, -v:   Print version and exit
 	          --help, -h:   Show this message
 
@@ -46,6 +47,7 @@ And add them to the Manifest file.
 * Hugh Sasse
 * Ken Egozi
 * Robert Glaser
+* Stefan Schüßler
 * Vesa Vänskä
 
 See also https://github.com/oscardelben/rawler/contributors
