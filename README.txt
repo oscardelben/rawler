@@ -41,6 +41,10 @@ If you add files, run:
 
 And add them to the Manifest file.
 
+TODO:
+
+* Consider domain when sleeping through requests. Save timestamp of last request and check if it's less than {{wait}}
+
 == CONTRIBUTORS:
 
 * bcoob
