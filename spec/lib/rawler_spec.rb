@@ -135,6 +135,18 @@ describe Rawler::Base do
          rawler.send(:add_status_code, url, from)
        end   
     end
+
+    it "should rescue from general errors" do
+      url = 'http://example.com'
+      from = 'http://other.com'
+      
+      Rawler::Request.should_receive(:get).and_raise
+      
+      output.should_receive(:error).with("Unknown error - #{url} - Called from: #{from}")
+      
+      rawler.send(:add_status_code, url, from)
+    end
+
     
   end
   
