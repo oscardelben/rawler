@@ -4,7 +4,7 @@ require 'rawler'
 require File.join(File.dirname(__FILE__), '..', '/vendor/lib-trollop.rb')
 
 opts = Trollop::options do
-  version "rawler 0.0.3 (c) 2011 Oscar Del Ben"
+  version "rawler 0.1.0 (c) 2011 Oscar Del Ben"
   banner <<-EOS
 Rawler is a command line utility for parsing links on a website
 
