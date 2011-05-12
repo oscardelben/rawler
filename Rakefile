@@ -1,6 +1,7 @@
 # -*- ruby -*-
 
 require 'rubygems'
+require 'fileutils'
 require 'hoe'
 
 # require 'bundler'
@@ -30,6 +31,16 @@ end
 desc 'Console'
 task :console do
   exec 'irb -rubygems -I lib -r rawler.rb'
+end
+
+desc 'generate docs'
+task :rocco do
+  %x!rm -r html/*!
+
+  files = Dir['lib/**/*.*']
+  files.each do |file|
+    %x!rocco #{file} -o html!
+  end
 end
 
 # vim: syntax=ruby

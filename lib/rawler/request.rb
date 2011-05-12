@@ -1,3 +1,5 @@
+# `Rawler::Request` contains some abstraction for making web requests, like automatically adding ssl and basic auth.
+
 module Rawler
   
   class Request

@@ -1,3 +1,5 @@
+# Add `attr_accessor` like methods to modules
+
 class Module
   def mattr_reader(*syms)
     syms.each do |sym|
