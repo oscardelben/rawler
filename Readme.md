@@ -1,14 +1,10 @@
-= rawler
-
-* http://github.com/oscardelben/rawler
-
-== DESCRIPTION:
+### rawler
 
 Rawler is a Ruby library that crawls your website and checks the status code for each of your links. Useful for finding dead links.
 
 Rawler will only parse pages with content type 'text/html', but it will check for the response code of every link.
 
-== SYNOPSIS:
+### SYNOPSIS:
 
   rawler http://example.com [options]
 
@@ -19,11 +15,11 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
 	       --version, -v:   Print version and exit
 	          --help, -h:   Show this message
 
-== INSTALL:
+### INSTALL:
 
 gem install rawler
 
-== DEVELOPMENT:
+### DEVELOPMENT:
 
 Run bundle install to install everything you need
 
@@ -43,7 +39,7 @@ And add them to the Manifest file.
 
 To generate the documentation, run rake rocco and then look under the html directory.
 
-== CONTRIBUTORS:
+### CONTRIBUTORS:
 
 * bcoob
 * Hugh Sasse
@@ -52,9 +48,9 @@ To generate the documentation, run rake rocco and then look under the html direc
 * Stefan Schüßler
 * Vesa Vänskä
 
-See also https://github.com/oscardelben/rawler/contributors
+See also [https://github.com/oscardelben/rawler/contributors](https://github.com/oscardelben/rawler/contributors)
 
-== LICENSE:
+### LICENSE:
 
 (The MIT License)
 
