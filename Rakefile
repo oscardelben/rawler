@@ -35,11 +35,14 @@ end
 
 desc 'generate docs'
 task :rocco do
-  %x!rm -r html/*!
+  #%x!rm -r html/*!
 
-  files = Dir['lib/**/*.*']
+  Dir.chdir "lib"
+
+  files = Dir['**/*.*']
+  
   files.each do |file|
-    %x!rocco #{file} -o html!
+    %x!rocco #{file} -o ../html!
   end
 end
 
