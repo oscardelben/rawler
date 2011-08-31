@@ -18,6 +18,7 @@ module Rawler
       @responses = {}
 
       Rawler.url      = URI.escape(url)
+      output.sync     = true
       Rawler.output   = Logger.new(output)
       Rawler.username = options[:username]
       Rawler.password = options[:password]
