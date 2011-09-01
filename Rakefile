@@ -23,6 +23,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Rawler is a tool that crawls the links of your website}
   gem.email = "info@oscardelben.com"
   gem.authors = ["Oscar Del Ben"]
+  gem.executables = ['rawler']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
