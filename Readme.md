@@ -41,14 +41,7 @@ To generate the documentation, run rake rocco and then look under the html direc
 
 ### CONTRIBUTORS:
 
-* bcoob
-* Hugh Sasse
-* Ken Egozi
-* Robert Glaser
-* Stefan Schüßler
-* Vesa Vänskä
-
-See also [https://github.com/oscardelben/rawler/contributors](https://github.com/oscardelben/rawler/contributors)
+Many. See [https://github.com/oscardelben/rawler/contributors](https://github.com/oscardelben/rawler/contributors)
 
 ### LICENSE:
 

@@ -33,6 +33,8 @@ task :console do
   exec 'irb -rubygems -I lib -r rawler.rb'
 end
 
+
+
 desc 'generate docs'
 task :rocco do
   #%x!rm -r html/*!
