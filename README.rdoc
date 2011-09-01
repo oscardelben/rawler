@@ -19,26 +19,6 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
 
 gem install rawler
 
-### DEVELOPMENT:
-
-Run bundle install to install everything you need
-
-  rake test
-
-To package and run the gem locally:
-
-  rake package
-  cd pkg
-  gem install rawler-#{version}.gem
-
-If you add files, run:
-  
-  rake check_manifest
-
-And add them to the Manifest file.
-
-To generate the documentation, run rake rocco and then look under the html directory.
-
 ### CONTRIBUTORS:
 
 Many. See [https://github.com/oscardelben/rawler/contributors](https://github.com/oscardelben/rawler/contributors)

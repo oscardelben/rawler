@@ -1,39 +1,58 @@
-# -*- ruby -*-
+# encoding: utf-8
 
 require 'rubygems'
+require 'bundler'
 require 'fileutils'
-require 'hoe'
 
-# require 'bundler'
-# Bundler::GemHelper.install_tasks
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:test)
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "rawler"
+  gem.homepage = "http://github.com/oscardelben/rawler"
+  gem.license = "MIT"
+  gem.summary = %Q{Rawler is a tool that crawls the links of your website}
+  gem.description = %Q{Rawler is a tool that crawls the links of your website}
+  gem.email = "info@oscardelben.com"
+  gem.authors = ["Oscar Del Ben"]
+  # dependencies defined in Gemfile
+end
+Jeweler::RubygemsDotOrgTasks.new
 
-# Hoe.plugin :compiler
-# Hoe.plugin :gem_prelude_sucks
-# Hoe.plugin :inline
-# Hoe.plugin :racc
-# Hoe.plugin :rubyforge
-
-Hoe.spec 'rawler' do
-  # HEY! If you fill these out in ~/.hoe_template/Rakefile.erb then
-  # you'll never have to touch them again!
-  # (delete this comment too, of course)
-
-  developer('Oscar Del Ben', 'info@oscardelben.com')
-
-  self.rubyforge_name = 'oscardelben'
-  
-  extra_deps << ['nokogiri']
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
 end
 
-desc 'Console'
-task :console do
-  exec 'irb -rubygems -I lib -r rawler.rb'
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |test|
+  test.libs << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
+  test.rcov_opts << '--exclude "gems/*"'
 end
 
+task :default => :test
 
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "rawler #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
 
 desc 'generate docs'
 task :rocco do
@@ -47,5 +66,3 @@ task :rocco do
     %x!rocco #{file} -o ../html!
   end
 end
-
-# vim: syntax=ruby
