@@ -22,7 +22,7 @@ module Rawler
       Rawler.output   = Logger.new(output)
       Rawler.username = options[:username]
       Rawler.password = options[:password]
-      Rawler.wait     = options[:wait].to_i
+      Rawler.wait     = options[:wait]
     end
     
     # The method used to start the real validation process

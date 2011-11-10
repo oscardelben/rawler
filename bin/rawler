@@ -16,7 +16,7 @@ EOS
   
   opt :username, "HTT Basic Username", :type => :string
   opt :password, "HTT Basic Password", :type => :string
-  opt :wait, "Number of seconds to wait betweet requests", :default => 3
+  opt :wait, "Seconds to wait between requests, may be fractional e.g. '1.5'", :type => :float, :default => 3.0
 end
 
 domain = ARGV.shift
