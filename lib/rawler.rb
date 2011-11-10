@@ -52,7 +52,11 @@ module Rawler
   # Username and Password for basic auth, if needed.
 
   mattr_accessor :username, :password
-  
+
+  # Log switch
+
+  mattr_accessor :log
+
   # Here we autoload when needed the specific namespaces.
 
   # [Rawler::Base](rawler/base.html) is responsible for validating all the pages in a domain. It's where all the magic happens.
