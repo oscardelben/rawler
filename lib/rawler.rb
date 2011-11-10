@@ -35,7 +35,7 @@ require 'rawler/core_extensions'
 # The Rawler module itself is very simple, and it's only used for storing configuration data like the url that we want to fetch, basic username and password.
 
 module Rawler
-  VERSION = '0.1.1'
+  VERSION = "#{File.read(File.expand_path(File.dirname(__FILE__)) + '/../VERSION')}"
   
   # `output` is where we want to direct output. It's set to `$stdout` by default.
 
@@ -52,7 +52,11 @@ module Rawler
   # Username and Password for basic auth, if needed.
 
   mattr_accessor :username, :password
-  
+
+  # Log switch
+
+  mattr_accessor :log
+
   # Here we autoload when needed the specific namespaces.
 
   # [Rawler::Base](rawler/base.html) is responsible for validating all the pages in a domain. It's where all the magic happens.

@@ -22,13 +22,16 @@ module Rawler
       Rawler.output   = Logger.new(output)
       Rawler.username = options[:username]
       Rawler.password = options[:password]
-      Rawler.wait     = options[:wait].to_i
+      Rawler.wait     = options[:wait]
+      Rawler.log      = options[:log]
+      @logfile = File.new("rawler_log.txt", "w") if Rawler.log
     end
     
     # The method used to start the real validation process
 
     def validate
       validate_links_in_page(Rawler.url)
+      @logfile.close if Rawler.log
     end
     
     private
@@ -113,9 +116,7 @@ module Rawler
 
       code = code.to_i
       case code / 100
-      when 1
-        Rawler.output.info(message)
-      when 2 then
+      when 1,2
         Rawler.output.info(message)
       when 3 then
         Rawler.output.warn(message)
@@ -124,6 +125,7 @@ module Rawler
       else
         Rawler.output.error("Unknown code #{message}")
       end
+      @logfile.puts(message) if Rawler.log
     end
     
   end
