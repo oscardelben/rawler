@@ -16,11 +16,17 @@ module Rawler
       
       private
       
-      def perform_request(method, url)     
+      def perform_request(method, url)
         uri = URI.parse(url)
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = (uri.scheme == 'https')
 
+        # Use http_proxy if set
+        proxy = URI.parse(ENV['http_proxy']) if ENV['http_proxy'] rescue nil
+        if proxy
+          http = Net::HTTP::Proxy(proxy.host, proxy.port).new(uri.host, uri.port)
+        else
+          http = Net::HTTP.new(uri.host, uri.port)
+        end
+        http.use_ssl = (uri.scheme == 'https')
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         
         path = (uri.path.size == 0)  ? "/" : uri.path
