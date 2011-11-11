@@ -10,7 +10,7 @@ module Rawler
 
     # We want to skip some kind of formats
 
-    SKIP_FORMATS = /^(javascript|mailto)/
+    SKIP_FORMATS = /^(javascript|mailto|callto)/
  
     # To use this class, just pass it a url
 
