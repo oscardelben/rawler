@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/oscardelben/rawler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.11"
   s.summary = "Rawler is a tool that crawls the links of your website"
 
   if s.respond_to? :specification_version then
