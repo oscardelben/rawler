@@ -1,5 +1,5 @@
 /pkg
 *.swp
 .DS_Store
-
 /.rvmrc
+/rawler_log.txt
