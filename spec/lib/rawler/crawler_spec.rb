@@ -159,6 +159,25 @@ describe Rawler::Crawler do
         crawler.links
       end
     end
+    
+    context "callto" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"callto:home22\">foo</a><a name=\"foo\">" }
+    
+      before(:each) do
+        register(url, content)
+      end
+    
+      it "should return empty links" do
+        crawler.links.should == []
+      end
+
+      it "should not report the error" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
+    end
 
   end
 
