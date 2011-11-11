@@ -4,25 +4,24 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{rawler}
-  s.version = "0.1.1"
+  s.name = "rawler"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Oscar Del Ben"]
-  s.date = %q{2011-09-16}
-  s.default_executable = %q{rawler}
-  s.description = %q{Rawler is a tool that crawls the links of your website}
-  s.email = %q{info@oscardelben.com}
+  s.date = "2011-11-11"
+  s.description = "Rawler is a tool that crawls the links of your website"
+  s.email = "info@oscardelben.com"
   s.executables = ["rawler"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "bin/rawler",
@@ -32,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/rawler/core_extensions/module.rb",
     "lib/rawler/crawler.rb",
     "lib/rawler/request.rb",
+    "rawler.gemspec",
     "spec/lib/base_spec.rb",
     "spec/lib/rawler/base_spec.rb",
     "spec/lib/rawler/crawler_spec.rb",
@@ -42,11 +42,11 @@ Gem::Specification.new do |s|
     "test/test_rawler.rb",
     "vendor/lib-trollop.rb"
   ]
-  s.homepage = %q{http://github.com/oscardelben/rawler}
+  s.homepage = "http://github.com/oscardelben/rawler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Rawler is a tool that crawls the links of your website}
+  s.rubygems_version = "1.8.10"
+  s.summary = "Rawler is a tool that crawls the links of your website"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
