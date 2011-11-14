@@ -3,7 +3,7 @@ module Rawler
 
     attr_accessor :url
 
-    SKIP_FORMATS = /^(javascript|mailto)/
+    SKIP_FORMATS = /^(javascript|mailto|callto)/
 
     def initialize(url)
       @url = url.strip

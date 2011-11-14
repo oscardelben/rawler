@@ -15,3 +15,8 @@ group :development do
   gem "jeweler", "~> 1.6.4"
   gem "rcov", ">= 0"
 end
+
+group :test do
+  gem "rspec"
+  gem "fakeweb"
+end
