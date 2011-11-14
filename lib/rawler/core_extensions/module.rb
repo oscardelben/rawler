@@ -1,5 +1,3 @@
-# Add `attr_accessor` like methods to modules
-
 class Module
   def mattr_reader(*syms)
     syms.each do |sym|
@@ -8,7 +6,7 @@ class Module
         unless defined? @@#{sym}
           @@#{sym} = nil
         end
-        
+
         def self.#{sym}
           @@#{sym}
         end
@@ -19,18 +17,18 @@ class Module
       EOS
     end
   end
-  
+
   def mattr_writer(*syms)
     syms.each do |sym|
       class_eval(<<-EOS, __FILE__, __LINE__)
         unless defined? @@#{sym}
           @@#{sym} = nil
         end
-        
+
         def self.#{sym}=(obj)
           @@#{sym} = obj
         end
-        
+
         #{"
         def #{sym}=(obj)
           @@#{sym} = obj
@@ -39,7 +37,7 @@ class Module
       EOS
     end
   end
-  
+
   def mattr_accessor(*syms)
     mattr_reader(*syms)
     mattr_writer(*syms)
