@@ -19,7 +19,7 @@ module Rawler
   def self.url=(url)
     url.strip!
 
-    if (url =~ /http:\/\//) != 0
+    if (url =~ /http[s]?:\/\//) != 0
       url = 'http://' + url
     end
 
