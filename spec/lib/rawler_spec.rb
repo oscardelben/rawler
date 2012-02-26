@@ -20,6 +20,27 @@ describe Rawler::Base do
       Rawler::Base.new(original, output)
       Rawler.url.should == expected
     end
+    
+    it "should auto prepend http" do
+      original = 'example.com'
+      expected = 'http://example.com'
+      Rawler::Base.new(original, output)
+      Rawler.url.should == expected
+    end
+    
+    it "should not auto prepend http when already http" do
+      original = 'http://example.com'
+      expected = 'http://example.com'
+      Rawler::Base.new(original, output)
+      Rawler.url.should == expected
+    end
+    
+    it "should not auto prepend http when https" do
+      original = 'https://example.com'
+      expected = 'https://example.com'
+      Rawler::Base.new(original, output)
+      Rawler.url.should == expected
+    end
   end
   
   describe "validate_links" do
