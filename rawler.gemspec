@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rawler"
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Oscar Del Ben"]
-  s.date = "2011-11-11"
+  s.date = "2012-02-27"
   s.description = "Rawler is a tool that crawls the links of your website"
   s.email = "info@oscardelben.com"
   s.executables = ["rawler"]
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/oscardelben/rawler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.10"
   s.summary = "Rawler is a tool that crawls the links of your website"
 
   if s.respond_to? :specification_version then
@@ -53,12 +53,16 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
+      s.add_development_dependency(%q<fakeweb>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
       s.add_dependency(%q<nokogiri>, [">= 0"])
+      s.add_dependency(%q<fakeweb>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
@@ -66,6 +70,8 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<nokogiri>, [">= 0"])
+    s.add_dependency(%q<fakeweb>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
