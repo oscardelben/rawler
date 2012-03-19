@@ -18,7 +18,9 @@ EOS
   opt :password, "HTT Basic Password", :type => :string
   opt :wait, "Seconds to wait between requests, may be fractional e.g. '1.5'", :type => :float, :default => 3.0
   opt :log, "Log results to file rawler_log.txt", :type => :boolean, :default => false
+  opt :css, "Check CSS links", :type => :boolean, :default => false
 end
+
 
 domain = ARGV.shift
 
