@@ -18,7 +18,8 @@ describe Rawler::Crawler do
     let(:crawler) { Rawler::Crawler.new(url) }
     let(:content) {
       content = <<-content
-        <p><a href="http://example.com/foo">foo</a></p>
+        <link rel="stylesheet" href="css/styles.css" />
+	<p><a href="http://example.com/foo">foo</a></p>
 
     		<p><a href="http://external.com/bar">bar</a></p>
     	content
@@ -32,6 +33,9 @@ describe Rawler::Crawler do
       crawler.links.should == ['http://example.com/foo', 'http://external.com/bar']
     end
     
+    it "should parse css links" do
+      crawler.css_links.should == ['http://example.com/css/styles.css']
+    end 
   end
   
   context "relative paths" do
