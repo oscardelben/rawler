@@ -11,6 +11,7 @@ module Rawler
   mattr_accessor :wait
   mattr_accessor :username, :password
   mattr_accessor :log
+  mattr_accessor :css
 
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"

@@ -27,6 +27,24 @@ module Rawler
       []
     end
 
+    def css_links
+      if different_domain?(url, Rawler.url) || not_html?(url)
+        return []
+      end
+
+      response = Rawler::Request.get(url)
+
+      doc = Nokogiri::HTML(response.body)
+
+      doc.css('link').map { |a| a['href'] }.select { |url| !url.nil? }.map { |url| absolute_url(url) }.select { |url| valid_url?(url) }
+    rescue Errno::ECONNREFUSED
+      write("Couldn't connect to #{url}")
+      []
+    rescue Errno::ETIMEDOUT
+      write("Connection to #{url} timed out")
+      []
+    end
+
     private
 
     def absolute_url(path)
@@ -50,8 +68,16 @@ module Rawler
       URI.parse(url_1).host != URI.parse(url_2).host
     end
 
+    def content_type(url)
+      Rawler::Request.head(url).content_type
+    end
+
     def not_html?(url)
-      Rawler::Request.head(url).content_type != 'text/html'
+      content_type(url) != 'text/html'
+    end
+
+    def not_css?(url)
+       content_type(url) != 'text/css'
     end
 
     def valid_url?(url)

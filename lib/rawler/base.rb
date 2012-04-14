@@ -13,6 +13,7 @@ module Rawler
       Rawler.password = options[:password]
       Rawler.wait     = options[:wait]
       Rawler.log      = options[:log]
+      Rawler.css      = options[:css]
       @logfile = File.new("rawler_log.txt", "w") if Rawler.log
     end
 
@@ -30,10 +31,24 @@ module Rawler
       end
     end
 
+    def validate_css_links_in_page(page)
+      Rawler::Crawler.new(page).css_links.each do |page_url|
+        validate_non_html(page_url, page)
+        sleep(Rawler.wait)
+      end
+    end
+
     def validate_page(page_url, from_url)
       if not_yet_parsed?(page_url)
         add_status_code(page_url, from_url) 
         validate_links_in_page(page_url) if same_domain?(page_url)
+        validate_css_links_in_page(page_url) if same_domain?(page_url) and Rawler.css
+      end
+    end
+
+    def validate_non_html(page_url, from_url)
+      if not_yet_parsed?(page_url)  
+        add_status_code(page_url, from_url)
       end
     end
 
