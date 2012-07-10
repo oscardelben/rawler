@@ -55,7 +55,7 @@ module Rawler
       else
         URI.parse(url).merge(path).to_s
       end
-    rescue URI::InvalidURIError
+    rescue URI::InvalidURIError, URI::InvalidComponentError
       write("Invalid url: #{path} - Called from: #{url}")
       nil
     end

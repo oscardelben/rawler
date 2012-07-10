@@ -306,5 +306,20 @@ describe Rawler::Crawler do
       crawler.links.should == []
     end
   end
-  
+
+  context "invalid mailto" do
+    let(:content) { '<a href="mailto:obfuscated(at)example(dot)com">foo</a>' }
+    let(:url)     { 'http://example.com' }
+    let(:crawler) { Rawler::Crawler.new(url) }
+
+    before(:each) do
+      register(url, content)
+    end
+
+    it "should notify about the invalid url" do
+      output.should_receive(:error).with('Invalid url: mailto:obfuscated(at)example(dot)com - Called from: http://example.com')
+      crawler.links.should == []
+    end
+  end
+
 end
