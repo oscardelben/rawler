@@ -55,9 +55,11 @@ module Rawler
     def add_status_code(link, from_url)
       response = Rawler::Request.get(link)
 
-      validate_page(response['Location'], from_url) if response['Location']
       record_response(response.code, link, from_url, response['Location'])
       responses[link] = { :status => response.code.to_i }
+
+      validate_page(response['Location'], from_url) if response['Location']
+
     rescue Errno::ECONNREFUSED
       error("Connection refused - #{link} - Called from: #{from_url}")
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT,
