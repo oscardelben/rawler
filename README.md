@@ -13,6 +13,8 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
         --password, -p <s>:   HTT Basic Password
             --wait, -w <f>:   Seconds to wait between requests, may be fractional e.g. '1.5' (default: 3.0)
                  --log, -l:   Log results to file rawler_log.txt
+         --logfile, -o <s>:   Specify logfile, implies --log (default: rawler_log.txt)
+                 --css, -c:   Check CSS links
              --version, -v:   Print version and exit
                 --help, -h:   Show this message
 
