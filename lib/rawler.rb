@@ -10,7 +10,7 @@ module Rawler
   mattr_accessor :url
   mattr_accessor :wait
   mattr_accessor :username, :password
-  mattr_accessor :log
+  mattr_accessor :log, :logfile
   mattr_accessor :css
 
   autoload :Base, "rawler/base"

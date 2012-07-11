@@ -1,6 +1,8 @@
 module Rawler
   class Base
 
+    DEFAULT_LOGFILE = "rawler_log.txt"
+
     attr_accessor :responses
 
     def initialize(url, output, options={})
@@ -12,9 +14,13 @@ module Rawler
       Rawler.username = options[:username]
       Rawler.password = options[:password]
       Rawler.wait     = options[:wait]
-      Rawler.log      = options[:log]
       Rawler.css      = options[:css]
-      @logfile = File.new("rawler_log.txt", "w") if Rawler.log
+
+      # Using a custom logfile implies logging.
+      Rawler.logfile  = options[:logfile] || DEFAULT_LOGFILE
+      Rawler.log      = options[:log] || Rawler.logfile != DEFAULT_LOGFILE
+
+      @logfile = File.new(Rawler.logfile, "w") if Rawler.log
     end
 
     def validate
