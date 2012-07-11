@@ -12,6 +12,40 @@ describe Rawler::Base do
     register('http://example.com', site)
   end
 
+  describe "logfile" do
+    it "should have default value" do
+      url = 'http://example.com'
+
+      Rawler::Base.new(url, output)
+      Rawler.logfile.should == Rawler::Base::DEFAULT_LOGFILE
+    end
+
+    it "should honor logfile option" do
+      url = 'http://example.com'
+      logfile = 'custom_logfile'.freeze
+
+      Rawler::Base.new(url, output, :logfile => logfile)
+      Rawler.logfile.should == logfile
+    end
+  end
+
+  describe "log" do
+    it "should be turned off by default" do
+      url = 'http://example.com'
+
+      Rawler::Base.new(url, output)
+      Rawler.log.should == false
+    end
+
+    it "should be turned on when assigning custom logfile" do
+      url = 'http://example.com'
+      logfile = 'custom_logfile'
+
+      Rawler::Base.new(url, output, :logfile => logfile)
+      Rawler.log.should == true
+    end
+  end
+
   describe "url encoding" do
     it "should encode url" do
       original = 'http://example.com/写程序容易出现的几个不好的地方'
