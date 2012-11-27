@@ -90,7 +90,7 @@ module Rawler
 
       scheme = URI.parse(url).scheme
       if url =~ Rawler.skip_url_pattern
-        info("Skipping #{url}")
+        false
       elsif ['http', 'https'].include?(scheme)
         true
       else

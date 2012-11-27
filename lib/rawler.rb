@@ -27,4 +27,8 @@ module Rawler
 
     @@url = url
   end
+
+  def self.set_skip_pattern(pattern, icase)
+    self.skip_url_pattern = pattern.nil? ? nil : Regexp.new(pattern, icase ? Regexp::IGNORECASE : nil )
+  end
 end

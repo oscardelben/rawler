@@ -16,10 +16,8 @@ module Rawler
       Rawler.wait     = options[:wait]
       Rawler.css      = options[:css]
 
-      skip_pattern = options[:iskip] unless options[:iskip].nil?
-      skip_pattern = options[:skip] if skip_pattern.nil?
-
-      Rawler.skip_url_pattern = skip_pattern.nil? ? nil : Regexp.new(skip_pattern, options[:iskip].nil? ? nil : Regexp::IGNORECASE)
+      Rawler.set_skip_pattern(options[:skip], false) unless options[:skip].nil?
+      Rawler.set_skip_pattern(options[:iskip], true) unless options[:iskip].nil?
 
       # Using a custom logfile implies logging.
       Rawler.logfile  = options[:logfile] || DEFAULT_LOGFILE
@@ -50,7 +48,7 @@ module Rawler
     end
 
     def validate_page(page_url, from_url)
-      if not_yet_parsed?(page_url) && page_url !~ Rawler.skip_url_pattern
+      if not_yet_parsed?(page_url)
         add_status_code(page_url, from_url) 
         validate_links_in_page(page_url) if same_domain?(page_url)
         validate_css_links_in_page(page_url) if same_domain?(page_url) and Rawler.css

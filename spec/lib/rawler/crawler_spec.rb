@@ -183,6 +183,46 @@ describe Rawler::Crawler do
       end
     end
 
+    context "skip matches" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"http://example.com/search/page:1/\">foo</a><a href=\"http://example.com/search/page:2/\">foo</a>" }
+    
+      before(:each) do
+        Rawler.set_skip_pattern('\/search\/(.*\/)?page:[2-9]', false)
+        register(url, content)
+      end
+    
+      it "should return one links" do
+        crawler.links.length.should eql(1)
+      end
+
+      it "should not report that it's skipping" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
+    end
+
+    context "case-insensitive skip matches" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"http://example.com/search/page:1/\">foo</a><a href=\"http://example.com/search/page:2/\">foo</a>" }
+    
+      before(:each) do
+        Rawler.set_skip_pattern('\/seArcH\/(.*\/)?PAGE:[2-9]', true)
+        register(url, content)
+      end
+    
+      it "should return one links" do
+        crawler.links.length.should eql(1)
+      end
+
+      it "should not report that it's skipping" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
+    end
+
   end
 
   context "content type" do
