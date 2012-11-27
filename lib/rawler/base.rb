@@ -16,6 +16,9 @@ module Rawler
       Rawler.wait     = options[:wait]
       Rawler.css      = options[:css]
 
+      Rawler.set_skip_pattern(options[:skip], false) unless options[:skip].nil?
+      Rawler.set_skip_pattern(options[:iskip], true) unless options[:iskip].nil?
+
       # Using a custom logfile implies logging.
       Rawler.logfile  = options[:logfile] || DEFAULT_LOGFILE
       Rawler.log      = options[:log] || Rawler.logfile != DEFAULT_LOGFILE

@@ -15,6 +15,8 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
                  --log, -l:   Log results to file rawler_log.txt
          --logfile, -o <s>:   Specify logfile, implies --log (default: rawler_log.txt)
                  --css, -c:   Check CSS links
+            --skip, -s <s>:   Skip URLS that match a regexp
+           --iskip, -i <s>:   Skip URLS that match a case insensitive regexp
              --version, -v:   Print version and exit
                 --help, -h:   Show this message
 

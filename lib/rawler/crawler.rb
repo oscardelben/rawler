@@ -64,6 +64,10 @@ module Rawler
       Rawler.output.error(message)
     end
 
+    def info(message)
+      Rawler.output.info(message)
+    end
+
     def different_domain?(url_1, url_2)
       URI.parse(url_1).host != URI.parse(url_2).host
     end
@@ -85,7 +89,9 @@ module Rawler
       url.strip!
 
       scheme = URI.parse(url).scheme
-      if ['http', 'https'].include?(scheme)
+      if url =~ Rawler.skip_url_pattern
+        false
+      elsif ['http', 'https'].include?(scheme)
         true
       else
         write("Invalid url - #{url}") unless url =~ SKIP_FORMATS
@@ -93,8 +99,8 @@ module Rawler
       end
 
     rescue URI::InvalidURIError
+      write("Invalid url - #{url}")
       false
-       write("Invalid url - #{url}")
     end
   end
 end
