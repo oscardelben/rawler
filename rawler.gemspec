@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rawler"
-  s.version = "0.1.6"
+  s.version = "0.1.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Oscar Del Ben"]
-  s.date = "2012-07-17"
+  s.date = "2012-12-02"
   s.description = "Rawler is a tool that crawls the links of your website"
   s.email = "info@oscardelben.com"
   s.executables = ["rawler"]
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/rawler",
+    "custom_logfile",
     "lib/rawler.rb",
     "lib/rawler/base.rb",
     "lib/rawler/core_extensions.rb",
