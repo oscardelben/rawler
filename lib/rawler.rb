@@ -13,6 +13,7 @@ module Rawler
   mattr_accessor :log, :logfile
   mattr_accessor :css
   mattr_accessor :skip_url_pattern
+  mattr_accessor :local
 
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"

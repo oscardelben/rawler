@@ -15,6 +15,8 @@ module Rawler
       Rawler.password = options[:password]
       Rawler.wait     = options[:wait]
       Rawler.css      = options[:css]
+      
+      Rawler.local    = options[:local]
 
       Rawler.set_skip_pattern(options[:skip], false) unless options[:skip].nil?
       Rawler.set_skip_pattern(options[:iskip], true) unless options[:iskip].nil?
