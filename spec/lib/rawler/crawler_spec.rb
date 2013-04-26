@@ -223,6 +223,30 @@ describe Rawler::Crawler do
       end
     end
 
+    context "non-local site should be omitted when local flag is used" do
+      let(:url)     { 'http://example.com/' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"http://example.com/page1/\">foo</a><a href=\"http://example.org/page2\">foo</a>" }
+    
+      before(:each) do
+        Rawler::local = true
+        register(url, content)
+      end
+    
+      it "should return one link" do
+        crawler.links.length.should eql(1)
+      end
+
+      it "should not report that it's skipping" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
+
+      after(:each) do
+        Rawler::local = false
+      end
+    end
+  
   end
 
   context "content type" do
