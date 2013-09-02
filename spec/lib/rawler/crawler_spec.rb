@@ -8,8 +8,8 @@ describe Rawler::Crawler do
   let(:output)  { double('output', :error => nil) }
 
   before(:each) do
-    Rawler.stub!(:url).and_return(url)
-    Rawler.stub!(:output).and_return(output)
+    Rawler.stub(:url).and_return(url)
+    Rawler.stub(:output).and_return(output)
   end
 
   context "basic functionality" do
@@ -81,7 +81,7 @@ describe Rawler::Crawler do
     let(:content) { '<a href="/foo">foo</a>' }
     
     before(:each) do
-      Rawler.stub!(:url).and_return('http://example.com')
+      Rawler.stub(:url).and_return('http://example.com')
       register(url, content)
     end
     
@@ -279,7 +279,7 @@ describe Rawler::Crawler do
     context "Errno::ECONNREFUSED" do
       
       before(:each) do
-        Rawler::Request.stub!(:get).and_raise Errno::ECONNREFUSED
+        Rawler::Request.stub(:get).and_raise Errno::ECONNREFUSED
       end
       
       it "should return an empty array" do
@@ -297,7 +297,7 @@ describe Rawler::Crawler do
     context "Errno::ETIMEDOUT" do
       
       before(:each) do
-        Rawler::Request.stub!(:get).and_raise Errno::ETIMEDOUT
+        Rawler::Request.stub(:get).and_raise Errno::ETIMEDOUT
       end
 
       it "should return an empty array when raising Errno::ETIMEDOUT" do
@@ -324,8 +324,8 @@ describe Rawler::Crawler do
       register('http://example.com/secret', '', :status => ["401", "Unauthorized"])
       register('http://foo:bar@example.com/secret', content)
 
-      Rawler.stub!(:username).and_return('foo')
-      Rawler.stub!(:password).and_return('bar')
+      Rawler.stub(:username).and_return('foo')
+      Rawler.stub(:password).and_return('bar')
     end
    
     it "should crawl http basic pages" do
