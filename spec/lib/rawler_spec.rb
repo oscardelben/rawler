@@ -8,7 +8,7 @@ describe Rawler::Base do
   let(:rawler)  { Rawler::Base.new('http://example.com', output) }
   
   before(:each) do
-    Rawler.stub!(:output).and_return(output)
+    Rawler.stub(:output).and_return(output)
     register('http://example.com', site)
   end
 
