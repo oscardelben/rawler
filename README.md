@@ -17,6 +17,8 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
                  --css, -c:   Check CSS links
             --skip, -s <s>:   Skip URLS that match a regexp
            --iskip, -i <s>:   Skip URLS that match a case insensitive regexp
+             --include <s>:   Only include URLS that match a regexp
+            --iinclude <s>:   Only include URLS that match a case insensitive regexp
              --version, -v:   Print version and exit
                 --help, -h:   Show this message
 

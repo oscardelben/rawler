@@ -22,6 +22,8 @@ EOS
   opt :css, "Check CSS links", :type => :boolean, :default => false
   opt :skip, "Skip URLS that match a pattern", :type => :string
   opt :iskip, "Skip URLS that match a case insensitive pattern", :type => :string
+  opt :include, "Only include URLS that match a pattern", :type => :string
+  opt :iinclude, "Only include URLS that match a case insensitive pattern", :type => :string
   opt :local, "Restrict to the given URL and below", :type => :boolean, :default => false
 end
 

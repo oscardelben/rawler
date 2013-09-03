@@ -203,7 +203,7 @@ describe Rawler::Crawler do
       end
 
       after(:each) do
-        Rawler.set_skip_pattern(nil, false)
+        Rawler.set_skip_pattern(nil)
       end
     end
 
@@ -227,7 +227,56 @@ describe Rawler::Crawler do
       end
 
       after(:each) do
-        Rawler.set_skip_pattern(nil, false)
+        Rawler.set_skip_pattern(nil)
+      end
+    end
+
+    context "include matches" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"http://example.com/search/page:1/\">foo</a><a href=\"http://example.com/search/page:2/\">foo</a>" }
+
+      before(:each) do
+        Rawler.set_include_pattern('\/search\/(.*\/)?page:[2-9]', false)
+        register(url, content)
+      end
+
+      it "should return one links" do
+        crawler.links.length.should eql(1)
+        crawler.links.should eq(['http://example.com/search/page:2/'])
+      end
+
+      it "should not report that it's including" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
+
+      after(:each) do
+        Rawler.set_include_pattern(nil)
+      end
+    end
+
+    context "case-insensitive include matches" do
+      let(:url)     { 'http://example.com/path' }
+      let(:crawler) { Rawler::Crawler.new(url) }
+      let(:content) { "<a href=\"http://example.com/search/page:1/\">foo</a><a href=\"http://example.com/search/page:2/\">foo</a>" }
+
+      before(:each) do
+        Rawler.set_include_pattern('\/seArcH\/(.*\/)?PAGE:[2-9]', true)
+        register(url, content)
+      end
+
+      it "should return one links" do
+        crawler.links.length.should eql(1)
+      end
+
+      it "should not report that it's including" do
+        crawler.should_not_receive(:write)
+        crawler.links
+      end
+
+      after(:each) do
+        Rawler.set_include_pattern(nil)
       end
     end
 
