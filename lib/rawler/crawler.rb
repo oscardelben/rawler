@@ -93,8 +93,6 @@ module Rawler
         false
       elsif Rawler.include_url_pattern && url !~ Rawler.include_url_pattern
         false
-      elsif Rawler.local and not url.include?(Rawler.url)
-        false
       elsif ['http', 'https'].include?(scheme)
         true
       else

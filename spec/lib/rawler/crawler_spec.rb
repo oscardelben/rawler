@@ -286,7 +286,7 @@ describe Rawler::Crawler do
       let(:content) { "<a href=\"http://example.com/page1/\">foo</a><a href=\"http://example.org/page2\">foo</a>" }
 
       before(:each) do
-        Rawler::local = true
+        Rawler.local = true
         register(url, content)
       end
 
@@ -300,7 +300,7 @@ describe Rawler::Crawler do
       end
 
       after(:each) do
-        Rawler::local = false
+        Rawler.local = false
       end
     end
 
