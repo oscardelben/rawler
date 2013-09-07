@@ -14,14 +14,16 @@ Usage:
 where [options] are:
 EOS
   
-  opt :username, "HTT Basic Username", :type => :string
-  opt :password, "HTT Basic Password", :type => :string
+  opt :username, "HTTP Basic Username", :type => :string
+  opt :password, "HTTP Basic Password", :type => :string
   opt :wait, "Seconds to wait between requests, may be fractional e.g. '1.5'", :type => :float, :default => 3.0
   opt :log, "Log results to file #{Rawler::Base::DEFAULT_LOGFILE}", :type => :boolean, :default => false
   opt :logfile, "Specify logfile, implies --log", :type => :string, :default => Rawler::Base::DEFAULT_LOGFILE
   opt :css, "Check CSS links", :type => :boolean, :default => false
-  opt :skip, "Skip URLS that match a pattern", :type => :string
-  opt :iskip, "Skip URLS that match a case insensitive pattern", :type => :string
+  opt :skip, "Skip URLs that match a pattern", :type => :string
+  opt :iskip, "Skip URLs that match a case insensitive pattern", :type => :string
+  opt :include, "Only include URLS that match a pattern", :type => :string
+  opt :iinclude, "Only include URLS that match a case insensitive pattern. Equivalent to '--include ^http://mysite.com/*'.", :type => :string
   opt :local, "Restrict to the given URL and below", :type => :boolean, :default => false
 end
 

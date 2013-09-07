@@ -9,14 +9,17 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
   rawler http://example.com [options]
 
       where [options] are:
-        --username, -u <s>:   HTT Basic Username
-        --password, -p <s>:   HTT Basic Password
+        --username, -u <s>:   HTTP Basic Username
+        --password, -p <s>:   HTTP Basic Password
             --wait, -w <f>:   Seconds to wait between requests, may be fractional e.g. '1.5' (default: 3.0)
                  --log, -l:   Log results to file rawler_log.txt
          --logfile, -o <s>:   Specify logfile, implies --log (default: rawler_log.txt)
                  --css, -c:   Check CSS links
-            --skip, -s <s>:   Skip URLS that match a regexp
-           --iskip, -i <s>:   Skip URLS that match a case insensitive regexp
+            --skip, -s <s>:   Skip URLs that match a regexp
+           --iskip, -i <s>:   Skip URLs that match a case insensitive regexp
+             --include <s>:   Only include URLs that match a regexp
+            --iinclude <s>:   Only include URLs that match a case insensitive regexp
+               --local <s>:   Restrict to the given URL and below. Equivalent to '--include ^http://mysite.com/*'.
              --version, -v:   Print version and exit
                 --help, -h:   Show this message
 

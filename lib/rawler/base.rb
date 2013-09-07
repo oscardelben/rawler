@@ -18,6 +18,9 @@ module Rawler
       
       Rawler.local    = options[:local]
 
+      Rawler.set_include_pattern(options[:include], false) unless options[:include].nil?
+      Rawler.set_include_pattern(options[:iinclude], true) unless options[:iinclude].nil?
+
       Rawler.set_skip_pattern(options[:skip], false) unless options[:skip].nil?
       Rawler.set_skip_pattern(options[:iskip], true) unless options[:iskip].nil?
 
