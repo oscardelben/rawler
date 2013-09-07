@@ -2,6 +2,4 @@
 *.swp
 .DS_Store
 /.rvmrc
-/coverage/
 /rawler_log.txt
-Gemfile.lock
