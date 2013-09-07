@@ -12,8 +12,8 @@ module Rawler
   mattr_accessor :username, :password
   mattr_accessor :log, :logfile
   mattr_accessor :css
+  mattr_accessor :include_url_pattern
   mattr_accessor :skip_url_pattern
-  mattr_accessor :local
 
   autoload :Base, "rawler/base"
   autoload :Crawler, "rawler/crawler"
@@ -29,7 +29,20 @@ module Rawler
     @@url = url
   end
 
-  def self.set_skip_pattern(pattern, icase)
-    self.skip_url_pattern = pattern.nil? ? nil : Regexp.new(pattern, icase ? Regexp::IGNORECASE : nil )
+  def self.create_regex(pattern, icase=false)
+    pattern.nil? ? nil : Regexp.new(pattern, icase ? Regexp::IGNORECASE : nil )
+  end
+
+  def self.set_include_pattern(pattern, icase=false)
+    self.include_url_pattern = self.create_regex(pattern, icase)
+  end
+
+  def self.set_skip_pattern(pattern, icase=false)
+    self.skip_url_pattern = self.create_regex(pattern, icase)
+  end
+
+  def self.local=(is_local)
+    pattern = is_local ? "^#{self.url}" : nil
+    self.set_include_pattern(pattern)
   end
 end

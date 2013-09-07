@@ -91,7 +91,7 @@ module Rawler
       scheme = URI.parse(url).scheme
       if url =~ Rawler.skip_url_pattern
         false
-      elsif Rawler.local and not url.include?(Rawler.url)
+      elsif Rawler.include_url_pattern && url !~ Rawler.include_url_pattern
         false
       elsif ['http', 'https'].include?(scheme)
         true

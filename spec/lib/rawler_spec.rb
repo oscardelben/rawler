@@ -94,6 +94,7 @@ describe Rawler::Base do
     end
     
     it "should not validate links on external pages" do
+      register('http://example.com/', '<a href="http://external.com/foo">x</a>')
       register('http://example.com/foo', '<a href="http://external.com/foo">x</a>')
       register('http://external.com/foo', '<a href="http://external.com/bar">x</a>')
       register('http://external.com/bar', '')
