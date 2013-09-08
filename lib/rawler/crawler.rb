@@ -3,49 +3,42 @@ module Rawler
 
     attr_accessor :url
 
-    SKIP_FORMATS = /^(javascript|mailto|callto)/
+    SKIP_FORMATS = /^(javascript|mailto|callto):/
 
     def initialize(url)
       @url = url.strip
     end
 
     def links
-      if different_domain?(url, Rawler.url) || not_html?(url)
-        return []
-      end
-
-      response = Rawler::Request.get(url)
-
-      doc = Nokogiri::HTML(response.body)
-
-      doc.css('a').map { |a| a['href'] }.select { |url| !url.nil? }.map { |url| absolute_url(url) }.select { |url| valid_url?(url) }
-    rescue Errno::ECONNREFUSED
-      write("Couldn't connect to #{url}")
-      []
-    rescue Errno::ETIMEDOUT
-      write("Connection to #{url} timed out")
-      []
+      get_links('a')
     end
 
     def css_links
-      if different_domain?(url, Rawler.url) || not_html?(url)
-        return []
-      end
-
-      response = Rawler::Request.get(url)
-
-      doc = Nokogiri::HTML(response.body)
-
-      doc.css('link').map { |a| a['href'] }.select { |url| !url.nil? }.map { |url| absolute_url(url) }.select { |url| valid_url?(url) }
-    rescue Errno::ECONNREFUSED
-      write("Couldn't connect to #{url}")
-      []
-    rescue Errno::ETIMEDOUT
-      write("Connection to #{url} timed out")
-      []
+      get_links('link')
     end
 
     private
+
+    def get_links(selector)
+      links = nil
+
+      unless different_domain?(url, Rawler.url) || not_html?(url)
+        # fetch the document
+        begin
+          response = Rawler::Request.get(url)
+        rescue Errno::ECONNREFUSED
+          write("Couldn't connect to #{url}")
+        rescue Errno::ETIMEDOUT
+          write("Connection to #{url} timed out")
+        else
+          # parse the document
+          doc = Nokogiri::HTML(response.body)
+          links = doc.css(selector).map { |a| a['href'] }.select { |url| !url.nil? }.map { |url| absolute_url(url) }.select { |url| valid_url?(url) }
+        end
+      end
+
+      links || []
+    end
 
     def absolute_url(path)
       path = URI.encode(path.strip, Regexp.new("[^#{URI::PATTERN::UNRESERVED}#{URI::PATTERN::RESERVED}#]"))
@@ -85,24 +78,26 @@ module Rawler
     end
 
     def valid_url?(url)
-      return false unless url
-      url.strip!
+      url = url.to_s.strip
+      is_valid = false
 
-      scheme = URI.parse(url).scheme
-      if url =~ Rawler.skip_url_pattern
-        false
-      elsif Rawler.include_url_pattern && url !~ Rawler.include_url_pattern
-        false
-      elsif ['http', 'https'].include?(scheme)
-        true
-      else
-        write("Invalid url - #{url}") unless url =~ SKIP_FORMATS
-        false
+      unless url.empty? || url =~ SKIP_FORMATS
+        begin
+          if url =~ Rawler.skip_url_pattern
+            # skipped
+          elsif Rawler.include_url_pattern && url !~ Rawler.include_url_pattern
+            # not included
+          elsif ['http', 'https'].include?(URI.parse(url).scheme)
+            is_valid = true
+          else
+            write("Invalid url - #{url}")
+          end
+        rescue URI::InvalidURIError
+          write("Invalid url - #{url}")
+        end
       end
 
-    rescue URI::InvalidURIError
-      write("Invalid url - #{url}")
-      false
+      is_valid
     end
   end
 end
