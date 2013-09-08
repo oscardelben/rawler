@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'rawler'
+require_relative '../lib/rawler'
 require File.join(File.dirname(__FILE__), '..', '/vendor/lib-trollop.rb')
 
 opts = Trollop::options do
