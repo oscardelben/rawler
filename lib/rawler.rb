@@ -2,9 +2,10 @@ require 'rubygems'
 require 'net/https'
 require 'nokogiri'
 require 'logger'
-require 'rawler/core_extensions'
+require_relative 'rawler/core_extensions'
 module Rawler
-  VERSION = "#{File.read(File.expand_path(File.dirname(__FILE__)) + '/../VERSION')}"
+  dir = File.dirname(__FILE__)
+  VERSION = File.read(File.join(dir, '..', 'VERSION'))
 
   mattr_accessor :output
   mattr_accessor :url
@@ -15,9 +16,9 @@ module Rawler
   mattr_accessor :include_url_pattern
   mattr_accessor :skip_url_pattern
 
-  autoload :Base, "rawler/base"
-  autoload :Crawler, "rawler/crawler"
-  autoload :Request, "rawler/request"
+  autoload :Base, File.join(dir, 'rawler', 'base')
+  autoload :Crawler, File.join(dir, 'rawler', 'crawler')
+  autoload :Request, File.join(dir, 'rawler', 'request')
 
   def self.url=(url)
     url.strip!

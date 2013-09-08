@@ -7,8 +7,7 @@ module Kernel
 end
 
 
-$:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'rawler'
+require_relative '../lib/rawler'
 require 'fakeweb'
 
 FakeWeb.allow_net_connect = false
