@@ -112,7 +112,7 @@ describe Rawler::Crawler do
       end
 
       after(:each) do
-        Rawler.ignore_fragments = true
+        Rawler.ignore_fragments = false
       end
 
       it 'should strip the fragments' do
