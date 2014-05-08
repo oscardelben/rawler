@@ -20,6 +20,7 @@ Rawler will only parse pages with content type 'text/html', but it will check fo
              --include <s>:   Only include URLs that match a regexp
             --iinclude <s>:   Only include URLs that match a case insensitive regexp
                --local <s>:   Restrict to the given URL and below. Equivalent to '--include ^http://mysite.com/*'.
+        --ignore_fragments:   Strips any fragment from parsed links
              --version, -v:   Print version and exit
                 --help, -h:   Show this message
 

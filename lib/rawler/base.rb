@@ -15,7 +15,8 @@ module Rawler
       Rawler.password = options[:password]
       Rawler.wait     = options[:wait]
       Rawler.css      = options[:css]
-      
+      Rawler.ignore_fragments = options[:ignore_fragments]
+
       Rawler.local    = options[:local]
 
       Rawler.set_include_pattern(options[:include], false) unless options[:include].nil?
@@ -54,14 +55,14 @@ module Rawler
 
     def validate_page(page_url, from_url)
       if not_yet_parsed?(page_url)
-        add_status_code(page_url, from_url) 
+        add_status_code(page_url, from_url)
         validate_links_in_page(page_url) if same_domain?(page_url)
         validate_css_links_in_page(page_url) if same_domain?(page_url) and Rawler.css
       end
     end
 
     def validate_non_html(page_url, from_url)
-      if not_yet_parsed?(page_url)  
+      if not_yet_parsed?(page_url)
         add_status_code(page_url, from_url)
       end
     end
