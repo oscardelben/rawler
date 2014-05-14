@@ -13,7 +13,7 @@ Usage:
 
 where [options] are:
 EOS
-  
+
   opt :username, "HTTP Basic Username", :type => :string
   opt :password, "HTTP Basic Password", :type => :string
   opt :wait, "Seconds to wait between requests, may be fractional e.g. '1.5'", :type => :float, :default => 3.0
@@ -25,6 +25,7 @@ EOS
   opt :include, "Only include URLS that match a pattern", :type => :string
   opt :iinclude, "Only include URLS that match a case insensitive pattern. Equivalent to '--include ^http://mysite.com/*'.", :type => :string
   opt :local, "Restrict to the given URL and below", :type => :boolean, :default => false
+  opt :ignore_fragments, "Discard fragments when parsing links", :type => :boolean, :default => false
 end
 
 
@@ -39,4 +40,3 @@ else
 end
 
 Rawler::Base.new(domain, $stdout, opts).validate
-

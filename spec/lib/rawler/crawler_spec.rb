@@ -105,6 +105,22 @@ describe Rawler::Crawler do
       crawler.links.should == ['http://example.com/foo#bar']
     end
 
+    context "when ignore_fragments is on" do
+
+      before(:each) do
+        Rawler.ignore_fragments = true
+      end
+
+      after(:each) do
+        Rawler.ignore_fragments = false
+      end
+
+      it 'should strip the fragments' do
+        crawler.links.should == ['http://example.com/foo']
+      end
+
+    end
+
   end
 
   context "urls with unicode characters" do

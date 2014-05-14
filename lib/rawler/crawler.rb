@@ -43,10 +43,16 @@ module Rawler
     def absolute_url(path)
       path = URI.encode(path.strip, Regexp.new("[^#{URI::PATTERN::UNRESERVED}#{URI::PATTERN::RESERVED}#]"))
 
-      if URI.parse(path).scheme
-        path
+      uri = URI.parse(path)
+
+      if uri.fragment && Rawler.ignore_fragments
+        uri.fragment = nil
+      end
+
+      if uri.scheme
+        uri.to_s
       else
-        URI.parse(url).merge(path).to_s
+        URI.parse(url).merge(uri).to_s
       end
     rescue URI::InvalidURIError, URI::InvalidComponentError
       write("Invalid url: #{path} - Called from: #{url}")
