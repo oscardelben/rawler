@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/rawler'
-require File.join(File.dirname(__FILE__), '..', '/vendor/lib-trollop.rb')
+require_relative '../vendor/lib-trollop'
 
 opts = Trollop::options do
   version "rawler #{Rawler::VERSION} (c) 2011 Oscar Del Ben"
@@ -39,4 +39,7 @@ else
   end
 end
 
-Rawler::Base.new(domain, $stdout, opts).validate
+rawler = Rawler::Base.new(domain, $stdout, opts)
+rawler.validate
+
+exit(rawler.errors.count)

@@ -282,9 +282,35 @@ describe Rawler::Base do
         output.should_receive(:error).with("Unknown code #{code} - #{link} - Called from: #{from}")
         rawler.send(:record_response, code, link, from)
       end
-    end
-    
+    end    
   end
+
+  describe "error introspection" do
+    context "no error codes occured" do
+      before do
+        rawler.responses["http://example.com/"]    = { :status => 100 }
+        rawler.responses["http://example.com/foo"] = { :status => 200 }
+        rawler.responses["http://example.com/bar"] = { :status => 300 }
+      end
+
+      it "should give all occurring errors" do
+        rawler.errors.should be_empty
+      end
+    end
+
+    context "error codes occured" do
+      before do
+        rawler.responses["http://example.com/"]    = { :status => 100 }
+        rawler.responses["http://example.com/foo"] = { :status => 400 }
+        rawler.responses["http://example.com/bar"] = { :status => 500 }
+      end
+
+      it "should give all occurring errors" do
+        rawler.errors.count.should eq 2
+      end
+    end
+  end
+
   
   
   private

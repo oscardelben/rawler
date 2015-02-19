@@ -37,6 +37,12 @@ module Rawler
       @logfile.close if Rawler.log
     end
 
+    def errors
+      @responses.reject{ |link, response|
+        (100..399).include?(response[:status].to_i)
+      }
+    end
+
     private
 
     def validate_links_in_page(page)
